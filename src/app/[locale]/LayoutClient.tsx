@@ -19,6 +19,7 @@ import Team from "@/components/Team";
 import Solutions from "@/components/Solutions";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { portfolio } from "@/data/portfolio";
 
 type Section = 'home' | 'work' | 'team' | 'portfolio' | 'solutions' | 'about' | 'contact';
@@ -226,6 +227,7 @@ export default function LayoutClient({
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} onNavigate={navigate} />
       <TransitionOverlay />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
+      <ThemeSwitcher />
     </>
   );
 }
