@@ -699,7 +699,8 @@ export default function ScrollShowcase() {
       textEls.forEach((el, i) => {
         if (!el) return;
         const d = Math.abs(sectionAtCamera - i);
-        const opacity = Math.max(0, 1 - d * 1.5);
+        // steep falloff: fully gone by ~1/3 section away, so neighbors never co-read
+        const opacity = Math.max(0, 1 - d * 3);
         el.style.opacity = opacity.toString();
       });
     }
