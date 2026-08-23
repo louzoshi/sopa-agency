@@ -27,18 +27,16 @@ const THEMES: { id: FontTheme; name: string; display: string; body: string }[] =
 ];
 
 export default function ThemeSwitcher() {
-  const [currentTheme, setCurrentTheme] = useState<FontTheme>('next-gen');
+  // lazy init from localStorage — avoids setState-in-effect cascading render
+  const [currentTheme, setCurrentTheme] = useState<FontTheme>(() => {
+    const saved = localStorage.getItem('sopa-font-theme') as FontTheme | null;
+    return saved && ['next-gen', 'cyber', 'avant-garde'].includes(saved) ? saved : 'next-gen';
+  });
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('sopa-font-theme') as FontTheme | null;
-    if (saved && ['next-gen', 'cyber', 'avant-garde'].includes(saved)) {
-      setCurrentTheme(saved);
-      document.documentElement.setAttribute('data-font-theme', saved);
-    } else {
-      document.documentElement.setAttribute('data-font-theme', 'next-gen');
-    }
-  }, []);
+    document.documentElement.setAttribute('data-font-theme', currentTheme);
+  }, [currentTheme]);
 
   const selectTheme = (theme: FontTheme) => {
     setCurrentTheme(theme);
