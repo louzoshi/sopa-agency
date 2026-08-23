@@ -55,18 +55,6 @@ export default function LayoutClient({
   const [scrollP, setScrollP] = useState(0); // 0 top of hero .. 1 fully into presentation
   // menu sections: orb opens on entry and STAYS open while on that section
   const [menuOpenAnim, setMenuOpenAnim] = useState(0);
-  // footer reveals only when the page is scrolled to (near) the bottom
-  const [atBottom, setAtBottom] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const near = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40;
-      setAtBottom(near);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
   const heroVisible = true; // orb + particles always visible as background (all pages)
   const orbOpen = section === 'home' ? scrollP : menuOpenAnim;
   const loaded = progress >= 1;
@@ -233,13 +221,8 @@ export default function LayoutClient({
         </div>
       </main>
 
-      {/* Footer: in normal flow after content, fades in when scrolled to page end */}
-      <div
-        className={`mt-20 transition-opacity duration-700 ${atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        aria-hidden={!atBottom}
-      >
-        <Footer locale={locale} />
-      </div>
+      {/* Footer: normal flow — appears naturally after content when scrolled */}
+      <Footer locale={locale} />
 
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} onNavigate={navigate} />
       <TransitionOverlay />
