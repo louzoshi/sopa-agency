@@ -1,4 +1,12 @@
 // data/site.ts
+// footerMenu: same shape as menu — edit here to change footer links.
+// socials: placeholder URLs until real X/Discord links exist.
+const SOCIALS = [
+  { name: 'X / Twitter', url: 'https://x.com/' },
+  { name: 'Discord', url: 'https://discord.gg/' },
+  { name: 'GitHub', url: 'https://github.com/sopa-agency' },
+];
+
 export const site = {
   en: {
     title: "SOPA AGENCY",
@@ -15,6 +23,7 @@ export const site = {
       { title: "about", link: "/about" },
       { title: "contact", link: "/contact" },
     ],
+    socials: SOCIALS,
   },
   pt: {
     title: "SOPA AGENCY",
@@ -31,5 +40,6 @@ export const site = {
       { title: "sobre", link: "/about" },
       { title: "contato", link: "/contact" },
     ],
+    socials: SOCIALS,
   },
 };
