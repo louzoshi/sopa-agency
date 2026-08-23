@@ -29,6 +29,7 @@ const THEMES: { id: FontTheme; name: string; display: string; body: string }[] =
 export default function ThemeSwitcher() {
   // lazy init from localStorage — avoids setState-in-effect cascading render
   const [currentTheme, setCurrentTheme] = useState<FontTheme>(() => {
+    if (typeof window === 'undefined') return 'next-gen';
     const saved = localStorage.getItem('sopa-font-theme') as FontTheme | null;
     return saved && ['next-gen', 'cyber', 'avant-garde'].includes(saved) ? saved : 'next-gen';
   });
