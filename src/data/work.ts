@@ -8,6 +8,13 @@ export interface WorkItem {
   category: 'events' | 'marketing' | 'production' | 'branding';
   // optional fullscreen video shown when the tile is clicked
   video?: string;
+  // optional detail page shown in a modal when the tile is clicked (no video)
+  detail?: {
+    url?: string;
+    intro: string;
+    sections: { heading: string; body: string }[];
+    quote?: string;
+  };
 }
 
 // SOPA service/section tiles — thumbs reused from the ported grid.
@@ -29,6 +36,39 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/w2.png",
     tags: "social media, web3, community",
     category: "marketing",
+    detail: {
+      url: "https://skatehive.app",
+      intro:
+        "A decentralized magazine by skaters, for skaters. No corporate overlords, no algorithm bs — every skater owns Skatehive. When you post, you're writing a page in Infinity Mag, our collective digital zine: your tricks, your spots, your voice. Forever.",
+      sections: [
+        {
+          heading: "Why It Matters",
+          body:
+            "Skateboarding media has been controlled by corporations and Big Tech platforms that take your content, control the narrative and keep the rewards. Skatehive changes this: you own your content, you earn from your posts, and the community decides what's valuable.",
+        },
+        {
+          heading: "How It Works",
+          body:
+            "Post & earn — share clips, photos and stories and get rewarded directly by the community through upvotes, no middlemen. Built on the Hive blockchain: open-source, decentralized — anyone can fork it, build on it, or create their own skateboard frontend. Every post becomes a page in Infinity Mag, a living magazine curated by skaters, read by skaters, owned by skaters.",
+        },
+        {
+          heading: "A Legacy of Tech + Skateboarding",
+          body:
+            "Technology has always pushed skateboarding forward: the VX1000 brought cinema to the streets, DVDs distributed skate videos globally, mIRC servers let us share rare clips, Web 2.0 gave us the share button. Skatehive is the next evolution — own your content, earn from your creativity, build with your crew.",
+        },
+        {
+          heading: "Open-Source Network",
+          body:
+            "Any skate shop, crew or community can clone the code, build their own frontend and join the network. All posts broadcast across the network: more visibility, more support, more opportunities.",
+        },
+        {
+          heading: "Join the Movement",
+          body:
+            "Skatehive isn't just a platform — it's skaters taking control of their own media. Create an account, download the mobile app, make your first post.",
+        },
+      ],
+      quote: '"Skateboarding is art. Make your post your page."',
+    },
   },
   {
     title: "DAO Central",

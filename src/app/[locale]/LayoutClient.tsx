@@ -10,10 +10,12 @@ import MobileMenu from "@/components/MobileMenu";
 import TransitionOverlay, { withWipe } from "@/components/TransitionOverlay";
 import WebGL from "@/components/WebGL";
 import Showreel from "@/components/Showreel";
+import WorkDetail from "@/components/WorkDetail";
 import Loader from "@/components/Loader";
 import ScrollShowcase from "@/components/ScrollShowcase";
 import { site } from "@/data/site";
 import { work } from "@/data/work";
+import type { WorkItem } from "@/data/work";
 import { team } from "@/data/team";
 import Team from "@/components/Team";
 import Solutions from "@/components/Solutions";
@@ -46,6 +48,7 @@ export default function LayoutClient({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [section, setSection] = useState<Section>('home');
   const [reelUrl, setReelUrl] = useState<string | null>(null);
+  const [detailItem, setDetailItem] = useState<WorkItem | null>(null);
   const [progress, setProgress] = useState(0);
   const [workFilter, setWorkFilter] = useState<'all' | 'events' | 'marketing' | 'production' | 'branding'>('all');
   // globe/video layer: home hero opens up (orb unfolds) as you scroll into the presentation
@@ -190,7 +193,7 @@ export default function LayoutClient({
                   <div
                     key={i}
                     className="group relative overflow-hidden cursor-pointer work-tile"
-                    onClick={() => item.video && setReelUrl(item.video)}
+                    onClick={() => item.video ? setReelUrl(item.video) : setDetailItem(item.detail ? item : null)}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={item.thumb} alt={item.title} loading="lazy" className="w-full aspect-video object-cover" />
@@ -198,6 +201,7 @@ export default function LayoutClient({
                       <span className="text-sm opacity-70">{item.subtitle}</span>
                       <span className="font-semibold">{item.title}</span>
                       {item.video && <span className="mt-1 text-xs opacity-60">▶ watch</span>}
+                      {!item.video && item.detail && <span className="mt-1 text-xs opacity-60">read more →</span>}
                     </div>
                   </div>
                 ))}
@@ -227,6 +231,7 @@ export default function LayoutClient({
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} onNavigate={navigate} />
       <TransitionOverlay />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
+      <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
       <ThemeSwitcher />
     </>
   );
