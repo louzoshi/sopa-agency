@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 
 export function withWipe(onNavigate: () => void) {
   document.getElementById("top-bar")?.classList.add("wipe");
-  document.getElementById("bottom-bar")?.classList.add("wipe");
   setTimeout(onNavigate, 500);
 }
 
@@ -43,9 +42,6 @@ export default function TransitionOverlay() {
   };
 
   return (
-    <>
-      <div id="top-bar" style={{ ...barStyle, top: 0 }}></div>
-      <div id="bottom-bar" style={{ ...barStyle, bottom: 0 }}></div>
-    </>
+    <div id="top-bar" style={{ ...barStyle, top: 0 }}></div>
   );
 }
