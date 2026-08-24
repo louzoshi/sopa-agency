@@ -26,6 +26,7 @@ import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { feed } from "@/data/feed";
+import { feedPosts } from "@/data/feed";
 
 type Section = 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact';
 
@@ -292,9 +293,64 @@ export default function LayoutClient({
             </>
           )}
           {section === 'feed' && (
-            <div className="max-w-7xl mx-auto px-6 py-16">
+            <div className="max-w-2xl mx-auto px-6 py-16">
               <h2 className="text-3xl font-bold mb-2 page-title-anim">{feed[l]?.title}</h2>
-              <p className="mt-4 opacity-50 page-anim page-anim-d1">Coming soon.</p>
+              <p className="mb-6 opacity-70 page-title-anim page-title-anim-d1">{feed[l]?.subtitle}</p>
+
+              {/* placeholder note */}
+              <div className="mb-6 rounded-xl border border-white/15 bg-black/60 px-4 py-2 font-mono text-[11px] text-white/40 page-anim">
+                {feed[l]?.placeholderNote}
+              </div>
+
+              {/* X-style feed */}
+              <div className="space-y-4 page-anim page-anim-d1">
+                {feedPosts.map((post, i) => (
+                  <article
+                    key={i}
+                    className="rounded-2xl border border-white/15 bg-black/70 backdrop-blur-md p-5 hover:border-amber-300/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="/favicon.ico" alt="" className="h-10 w-10 rounded-full object-cover ring-1 ring-white/20" />
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm font-semibold text-white/90">SOPA AGENCY</span>
+                        <span className="ml-1.5 text-sm text-white/40">@{post.handle}</span>
+                        <span className="ml-1.5 text-sm text-white/30">· {post.time}</span>
+                      </div>
+                      <span className="text-amber-300 text-lg">𝕏</span>
+                    </div>
+                    <p className="text-sm leading-relaxed text-white/85 mb-3">
+                      {locale === 'pt' ? post.text.pt : post.text.en}
+                    </p>
+                    {post.image && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={post.image}
+                        alt=""
+                        loading="lazy"
+                        className="w-full rounded-xl border border-white/10 object-cover aspect-video mb-3"
+                      />
+                    )}
+                    <div className="flex gap-6 font-mono text-[11px] text-white/40">
+                      <span>♡ {post.likes}</span>
+                      <span>⇄ {post.reposts}</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              {/* follow CTA */}
+              <div className="mt-8 text-center page-anim">
+                <a
+                  href="https://x.com/sopaagency"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block rounded-full bg-amber-400 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-black shadow-[0_0_25px_rgba(255,204,0,0.3)] hover:shadow-[0_0_40px_rgba(255,204,0,0.5)] transition-all cursor-pointer"
+                >
+                  {feed[l]?.follow}
+                </a>
+              </div>
+
               <CTA locale={locale} />
             </div>
           )}
