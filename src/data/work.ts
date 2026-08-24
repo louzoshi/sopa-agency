@@ -5,7 +5,7 @@ export interface WorkItem {
   role: string;
   thumb: string;
   tags: string;
-  category: 'events' | 'marketing' | 'production' | 'branding';
+  category: 'events' | 'marketing' | 'production' | 'branding' | 'blockchain' | 'web3' | 'gamedev' | 'ai';
   // optional fullscreen video shown when the tile is clicked
   video?: string;
   // optional detail page shown in a modal when the tile is clicked (no video)
@@ -92,7 +92,7 @@ export const workItems: WorkItem[] = [
     role: "AI Development",
     thumb: "/assets/images/work/w5.jpeg",
     tags: "ai, agents, infra",
-    category: "production",
+    category: "ai",
   },
   {
     title: "Animation Studio",
@@ -108,7 +108,7 @@ export const workItems: WorkItem[] = [
     role: "Game Development",
     thumb: "/assets/images/work/w7.jpg",
     tags: "gamedev, webgl, threejs",
-    category: "production",
+    category: "ai",
   },
   {
     title: "Swap",
@@ -116,7 +116,7 @@ export const workItems: WorkItem[] = [
     role: "Multichain Swap",
     thumb: "/assets/images/work/swaps.pro.png",
     tags: "blockchain, defi, web3",
-    category: "production",
+    category: "blockchain",
   },
   {
     title: "Blockchain",
@@ -124,7 +124,7 @@ export const workItems: WorkItem[] = [
     role: "Hardware Wallet",
     thumb: "/assets/images/work/keepkey.png",
     tags: "blockchain, defi, web3",
-    category: "production",
+    category: "blockchain",
   },
 ];
 
