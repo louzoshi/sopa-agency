@@ -1,8 +1,7 @@
 // src/components/CTA.tsx
 // End-of-page call-to-action: centered heading + subtext + glowing button.
-// Props optional — bilingual defaults (contact link) when used bare.
+// Props optional — bilingual defaults (contact section) when used bare.
 'use client';
-import { useRouter } from 'next/navigation';
 import { site } from '@/data/site';
 
 const COPY = {
@@ -32,7 +31,7 @@ export default function CTA({
   locale?: string;
 }) {
   const t = COPY[locale as keyof typeof COPY] ?? COPY.en;
-  const router = useRouter();
+  const section = href.replace(/^\//, '') || 'home';
 
   return (
     <section className="relative overflow-hidden text-center py-24 px-6">
@@ -44,7 +43,7 @@ export default function CTA({
       <h2 className="relative text-3xl md:text-4xl font-bold mb-3">{title ?? t.title}</h2>
       <p className="relative opacity-70 mb-10 max-w-xl mx-auto">{subtitle ?? t.subtitle}</p>
       <button
-        onClick={() => router.push(`/${locale}${href === '/' ? '' : href}`)}
+        onClick={() => window.dispatchEvent(new CustomEvent('sopa:navigate', { detail: section }))}
         className="relative px-8 py-4 rounded-full bg-amber-400 text-black font-bold tracking-wide uppercase text-sm shadow-[0_0_30px_rgba(255,204,0,0.35)] hover:shadow-[0_0_50px_rgba(255,204,0,0.55)] hover:bg-amber-300 transition-all cursor-pointer"
       >
         {button ?? t.button}
