@@ -68,13 +68,28 @@ const navigate = (s: Section) => {
 - `open` 0–1 controls orb unfold
 - `onProgress` fires when first frame renders (loader gate)
 
-## 4. Fonts
+## 4. Fonts (Font Theme System)
 
-- **Home hero & showcase titles:** Futura PT via Adobe Typekit (kit `wvh2fzc`)
-  - CSS: `.font-futura { font-family: futura-pt, Futura, 'Trebuchet MS', Arial, sans-serif; }`
-  - Loaded in `src/app/layout.tsx` via `<script src="https://use.typekit.net/wvh2fzc.js" />`
-- **Body/UI:** Geist Sans (Tailwind `--font-sans`)
-- **Monospace:** Geist Mono (Tailwind `--font-mono`)
+Fonts are user-switchable at runtime via the pill in the bottom-right corner (`ThemeSwitcher.tsx`, persisted to `localStorage: sopa-font-theme`). All fonts load via `next/font/google` in `src/app/layout.tsx`.
+
+| Theme | id | Display | Body |
+|---|---|---|---|
+| Next-Gen AI (default) | `next-gen` | Space Grotesk | Plus Jakarta Sans |
+| Cybernetic | `cyber` | Outfit | Inter |
+| Avant-Garde | `avant-garde` | Syne | Plus Jakarta Sans |
+
+**How it works:**
+1. Each Google font is loaded as a CSS variable (`--font-space-grotesk`, `--font-plus-jakarta`, etc.) on `<html>`.
+2. `globals.css` maps them into semantic vars under a `[data-font-theme="..."]` selector:
+   ```css
+   --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+   --font-body: var(--font-plus-jakarta), system-ui, sans-serif;
+   --font-code: var(--font-jetbrains-mono), monospace;  /* JetBrains Mono, not themed */
+   ```
+3. Tailwind picks them up via `@theme inline` → `font-sans`, `font-display`, `font-mono` utilities.
+4. `ThemeSwitcher.tsx` sets `document.documentElement.dataset.fontTheme`.
+
+**Usage:** body text inherits automatically; display/headings use `.font-futura`/`.font-display` class or `font-display` utility. To add a theme: load the font in layout.tsx, add a `[data-font-theme]` block in globals.css, add an entry to `THEMES` in ThemeSwitcher.tsx.
 
 ## 5. Colour Palette (Amber/Black)
 
