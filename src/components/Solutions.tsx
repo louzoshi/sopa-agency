@@ -38,7 +38,12 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <h2 className="text-3xl font-bold page-title-anim">{title}</h2>
-      <div className="pb-[60vh]" /> {/* runway so the last cards can stack before section ends */}
+      <p className="mt-3 mb-6 max-w-2xl text-white/70 leading-relaxed page-title-anim page-title-anim-d1">
+        {locale === 'pt'
+          ? 'Sistemas sob medida, construídos em torno da sua operação — de agentes de IA a receita onchain. Entendemos o problema, desenhamos, construímos e colocamos em produção.'
+          : 'Custom-built systems engineered around your operation — from AI agents to onchain revenue. We understand the problem, design the system, build it, and put it into production.'}
+      </p>
+      <div className="pb-[45vh]" /> {/* runway so the last cards can stack before section ends */}
       {solutions.map((s, i) => (
         <div
           key={s.num}
