@@ -10,7 +10,7 @@ export default function Footer({ locale }: { locale: string }) {
   const s = site[locale as keyof typeof site] ?? site.en;
 
   return (
-    <footer className="bg-black text-white py-10">
+    <footer className="relative z-20 bg-black text-white py-10">
       <div className="max-w-4xl mx-auto px-4">
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-6">
           {s.menu.map((item, index) => (
