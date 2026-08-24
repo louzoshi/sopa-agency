@@ -137,7 +137,9 @@ export default function Contact({ title, locale }: { title?: string; locale: str
           body: JSON.stringify({ name, email, message: data.reply, role: 'assistant', locale }),
         }).catch(() => {});
       }
-      setStatus(turn + 1 >= MAX_TURNS ? 'done' : 'chat');
+      // bot decides when it's done — turn cap is only a safety net
+      if (data.done || data.status === 'complete') setStatus('done');
+      else setStatus('chat');
       setTimeout(() => chatEnd.current?.scrollIntoView({ behavior: 'smooth' }), 50);
     } catch {
       setStatus('error');
@@ -193,7 +195,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
           body: JSON.stringify({ name, email, message: data.reply, role: 'assistant', locale }),
         }).catch(() => {});
       }
-      if (turn + 1 >= MAX_TURNS) setStatus('done');
+      if (turn + 1 >= MAX_TURNS || data.done || data.status === 'complete') setStatus('done');
       setTimeout(() => chatEnd.current?.scrollIntoView({ behavior: 'smooth' }), 50);
     } catch {
       // keep the user bubble; surface the fallback line
