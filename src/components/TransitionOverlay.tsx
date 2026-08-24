@@ -1,48 +1,44 @@
 // src/components/TransitionOverlay.tsx
+// Full-screen black layer. On load: holds 2s then fades out revealing the orb.
+// withWipe() flashes it back on during section transitions.
 'use client';
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 export function withWipe(onNavigate: () => void) {
-  document.getElementById("top-bar")?.classList.add("wipe");
+  const bar = document.getElementById("top-bar");
+  if (bar) bar.style.opacity = '1';
   setTimeout(onNavigate, 500);
 }
 
-export default function TransitionOverlay() {
+export default function TransitionOverlay({ ready }: { ready?: boolean }) {
   const pathname = usePathname();
 
-  // home = /en or /pt exactly (locale-aware, no hardcode)
+  // home = /en or /pt exactly; other pages reveal immediately
   const isHome = /^\/(en|pt)\/?$/.test(pathname);
-  const targetState = isHome ? 'bar' : 'hide';
-
-  const [state, setState] = useState<'wipe' | 'bar' | 'hide'>(targetState);
-  const [prevPath, setPrevPath] = useState(pathname);
-
-  // reset to wipe during render on route change (React-recommended, no effect)
-  if (prevPath !== pathname) {
-    setPrevPath(pathname);
-    setState('wipe');
-  }
+  // hold black for 2s on home, then fade out over 1s
+  const [visible, setVisible] = useState(isHome);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setState(targetState);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [pathname, targetState]);
-
-  const barStyle = {
-    position: 'fixed' as const,
-    left: 0,
-    right: 0,
-    background: 'black',
-    transition: 'height 0.6s ease-in-out',
-    // opening screen: starts covering the viewport, retracts upward
-    height: state === 'wipe' ? '100vh' : state === 'bar' ? '10vh' : '0vh',
-  };
+    setVisible(isHome);
+    if (!isHome) return;
+    const t = setTimeout(() => setVisible(false), 2000);
+    return () => clearTimeout(t);
+  }, [isHome, ready]);
 
   return (
-    <div id="top-bar" style={{ ...barStyle, top: 0 }}></div>
+    <div
+      id="top-bar"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'black',
+        zIndex: 9999,
+        pointerEvents: visible ? 'auto' : 'none',
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 1s ease-in-out',
+      }}
+    />
   );
 }
