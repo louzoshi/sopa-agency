@@ -146,12 +146,14 @@ export default function Contact({ title, locale }: { title?: string; locale: str
     }
   }
 
-  // "talk to our agent" — starts the chat without sending a brief
+  // "talk to our agent" — sends the current form as the starting brief;
+  // the bot then engages if something critical is missing
   async function startChat() {
-    const text = locale === 'pt' ? 'oi, quero conversar com o agente' : 'hi, I want to talk to the agent';
+    const text = msg.trim() || (locale === 'pt' ? 'quero conversar sobre um projeto' : 'I want to talk about a project');
     setChat([{ role: 'user', content: text }]);
     logLead(text);
     await callBot(text);
+    setMsg('');
   }
 
   // "send brief" — save the lead, no bot conversation
