@@ -44,6 +44,9 @@ export default function About({ locale }: { locale: string }) {
           <h3 className="text-2xl font-semibold mb-2">{t.partners.title}</h3>
           <p className="max-w-2xl text-sm opacity-70">{t.partners.subtitle}</p>
         </div>
+        <div className="inline-block rounded-xl border border-amber-300/30 bg-amber-300/10 px-4 py-2 font-mono text-xs text-amber-200">
+          {t.hero.highlight}
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {t.partners.items.map((p) => (
             <div key={p.name} className="rounded-xl border border-white/15 bg-black/60 p-5 backdrop-blur-md">
