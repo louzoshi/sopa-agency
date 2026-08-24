@@ -220,7 +220,12 @@ export default function LayoutClient({
             <div className="ghost-title">{section}</div>
           </div>
         )}
-        {section === 'home' && <ScrollShowcase />}
+        {section === 'home' && (
+          <>
+            <ScrollShowcase />
+            <CTA locale={locale} />
+          </>
+        )}
         <div key={section}>
           {section === 'work' && (
             <div className="max-w-7xl mx-auto px-6 py-16">
