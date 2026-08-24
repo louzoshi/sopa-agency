@@ -294,7 +294,7 @@ export default function LayoutClient({
       <Footer locale={locale} />
 
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} onNavigate={navigate} />
-      <TransitionOverlay hidden={!isHome} />
+      <TransitionOverlay hidden={!isHome} locale={locale} />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
       <ThemeSwitcher />
