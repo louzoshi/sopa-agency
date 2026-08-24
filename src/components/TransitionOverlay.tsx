@@ -37,8 +37,9 @@ export default function TransitionOverlay() {
     left: 0,
     right: 0,
     background: 'black',
-    transition: 'height 0.3s ease-in-out',
-    height: state === 'wipe' ? '50vh' : state === 'bar' ? '10vh' : '0vh',
+    transition: 'height 0.6s ease-in-out',
+    // opening screen: starts covering the viewport, retracts upward
+    height: state === 'wipe' ? '100vh' : state === 'bar' ? '10vh' : '0vh',
   };
 
   return (
