@@ -2,16 +2,18 @@
 // footerMenu: same shape as menu — edit here to change footer links.
 // socials: placeholder URLs until real X/Discord links exist.
 const SOCIALS = [
-  { name: 'X / Twitter', url: 'https://x.com/' },
-  { name: 'Discord', url: 'https://discord.gg/' },
+  { name: 'sopa.team', url: 'https://sopa.team' },
+  { name: 'Farcaster /gnars', url: 'https://warpcast.com/~/channel/gnars' },
   { name: 'GitHub', url: 'https://github.com/sopa-agency' },
+  { name: 'crew@sopa.team', url: 'mailto:crew@sopa.team' },
 ];
 
 export const site = {
   en: {
     title: "SOPA AGENCY",
-    "page-title": "SOPA | Creative Agency",
-    description: "SOPA is a creative technology and game development agency.",
+    "page-title": "SOPA | Culture that ships",
+    description: "A creative + engineering studio that breaks the barrier between the old internet and the new one — brands, culture, AI agents, and onchain, built to actually ship.",
+    tagline: "Culture that ships. Both worlds — classic and new tech.",
     language: "en",
     currency: "$",
     menu: [
@@ -27,8 +29,9 @@ export const site = {
   },
   pt: {
     title: "SOPA AGENCY",
-    "page-title": "SOPA | Agência Criativa",
-    description: "SOPA é uma agência de tecnologia criativa e desenvolvimento de jogos.",
+    "page-title": "SOPA | Cultura que entrega",
+    description: "Um estúdio criativo e de engenharia que quebra a barreira entre a velha internet e a nova — marcas, cultura, agentes de IA e onchain, feitos para realmente entregar.",
+    tagline: "Cultura que entrega. Os dois mundos — tech clássica e nova.",
     language: "pt-BR",
     currency: "R$",
     menu: [

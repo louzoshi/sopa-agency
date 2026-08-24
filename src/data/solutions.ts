@@ -1,57 +1,61 @@
 // src/data/solutions.ts
 export type Solution = {
   num: string;
+  icon: string;
   title: string;
+  tags?: string[];
   body: { en: string; pt: string };
 };
 
 export const solutions: Solution[] = [
   {
     num: "01",
-    title: "Experiences",
+    icon: "🤖",
+    title: "AI Agents & Automation",
+    tags: ["autonomous agents", "transcoding", "ops automation", "agentic marketing"],
     body: {
-      en: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. SOPA crafts innovative event concepts aligned with brand positioning, delivering end-to-end planning and execution — from strategy to stage, every detail managed for a unique brand experience.",
-      pt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A SOPA cria conceitos inovadores de eventos alinhados ao posicionamento da marca, com planejamento e execução ponta a ponta — da estratégia ao palco, cada detalhe gerado para uma experiência única.",
+      en: "Autonomous agents that write, publish, transcode, track revenue, and run ops. Agentic marketing that works while you sleep.",
+      pt: "Agentes autônomos que escrevem, publicam, transcodificam, rastreiam receita e operam. Marketing agêntico que trabalha enquanto você dorme.",
     },
   },
   {
     num: "02",
-    title: "Integrated Marketing",
+    icon: "🎯",
+    title: "Campaign Engineering",
+    tags: ["Farcaster", "X / Twitter", "Hive", "Discord", "Instagram", "email"],
     body: {
-      en: "Lorem ipsum dolor sit amet, sed do eiusmod tempor incididunt. Our IMC approach aligns communication strategies with growth objectives, delivering consistent messaging across every touchpoint to maximize impact and build stronger audience connections.",
-      pt: "Lorem ipsum dolor sit amet, sed do eiusmod tempor incididunt. Nossa abordagem de IMC alinha estratégias de comunicação aos objetivos de crescimento, com mensagens consistentes em todos os pontos de contato para maximizar o impacto.",
+      en: "Multi-channel launches — Farcaster · X · Hive · Discord · Instagram · email — from one brief, with the copy, the calendar, and the receipts.",
+      pt: "Lançamentos multicanal — Farcaster · X · Hive · Discord · Instagram · email — a partir de um único brief, com copy, calendário e comprovantes.",
     },
   },
   {
     num: "03",
-    title: "Creative Design",
+    icon: "🛠️",
+    title: "Portals & Tooling",
+    tags: ["dashboards", "content studio", "analytics", "treasury", "payroll"],
     body: {
-      en: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. We develop brand identities and creative concepts that bring brand stories to life — consistent and memorable across every touchpoint, helping brands stand out with a distinctive presence.",
-      pt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Desenvolvemos identidades de marca e conceitos criativos que dão vida às histórias — consistentes e memoráveis em cada ponto de contato, com uma presença distinta.",
+      en: "Multi-tenant dashboards: content studio, analytics, treasury, payroll, revenue tracking. A brand's marketing and its ops, all in one place.",
+      pt: "Dashboards multi-inquilino: estúdio de conteúdo, analytics, tesouraria, folha de pagamento e rastreamento de receita. O marketing e as operações da marca em um só lugar.",
     },
   },
   {
     num: "04",
-    title: "Production",
+    icon: "⛓️",
+    title: "Onchain Revenue & Treasury",
+    tags: ["0xSplits", "Superfluid payroll", "swappers", "staking pipelines"],
     body: {
-      en: "Lorem ipsum dolor sit amet, sed do eiusmod tempor. We produce films, shows, and game content with a creative and distinctive approach that meets international standards — polished, impactful, and infused with a unique brand signature.",
-      pt: "Lorem ipsum dolor sit amet, sed do eiusmod tempor. Produzimos filmes, shows e conteúdo de games com uma abordagem criativa e distinta que atende padrões internacionais — polido, impactante e com assinatura única.",
+      en: "Live revenue streams, 0xSplits, swappers, Superfluid payroll, staking pipelines. Auditable, not aspirational.",
+      pt: "Fluxos de receita em tempo real, 0xSplits, swappers, folha de pagamento Superfluid, pipelines de staking. Auditável, não aspiracional.",
     },
   },
   {
     num: "05",
-    title: "Media Network",
+    icon: "🎬",
+    title: "Content & Culture",
+    tags: ["Skate", "BMX", "Surf", "DAO communities", "mainstream to onchain"],
     body: {
-      en: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Through media booking, sponsorship partnerships, and earned coverage, we expand reach, strengthen visibility, and amplify communication impact to elevate brand value.",
-      pt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Por meio de compra de mídia, parcerias de patrocínio e cobertura espontânea, ampliamos alcance, fortalecemos visibilidade e elevamos o valor da marca.",
-    },
-  },
-  {
-    num: "06",
-    title: "Interactive & Games",
-    body: {
-      en: "Lorem ipsum dolor sit amet, sed do eiusmod tempor incididunt. From WebGL experiences to full game development, we build interactive worlds that turn audiences into players — real-time 3D, playable ads, and immersive brand universes.",
-      pt: "Lorem ipsum dolor sit amet, sed do eiusmod tempor incididunt. De experiências WebGL a desenvolvimento completo de games, criamos mundos interativos que transformam audiências em jogadores — 3D em tempo real e universos imersivos.",
+      en: "Skate, BMX, surf and the communities around them. Reach that crosses from mainstream to onchain and back.",
+      pt: "Skate, BMX, surf e as comunidades ao redor. Alcance que transita do mainstream para o onchain e vice-versa.",
     },
   },
 ];

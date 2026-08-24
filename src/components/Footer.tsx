@@ -36,8 +36,12 @@ export default function Footer({ locale }: { locale: string }) {
           ))}
         </div>
 
+        <p className="text-center text-xs font-mono text-amber-300/80 mb-2">
+          {locale === 'pt' ? 'Do clássico ao onchain, do humano ao agente — entregamos em ambos. 🛹⚡' : 'From classic to onchain, human to agent — we ship in both. 🛹⚡'}
+        </p>
+
         <p className="text-center text-xs text-white/40">
-          © {new Date().getFullYear()} SOPA AGENCY — creative tech & AI
+          © {new Date().getFullYear()} SOPA AGENCY — Culture that ships
         </p>
       </div>
     </footer>

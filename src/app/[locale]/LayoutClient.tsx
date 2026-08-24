@@ -29,12 +29,12 @@ type Section = 'home' | 'work' | 'team' | 'portfolio' | 'solutions' | 'about' | 
 // ponytail: solutions/contact have no data files yet — inline until they earn one
 const EXTRA = {
   en: {
-    solutions: { title: 'Solutions', body: 'Creative technology, WebGL, and game development.' },
-    contact: { title: 'Contact', body: 'hello@sopa.agency' },
+    solutions: { title: 'Solutions', body: 'AI agents, campaign engineering, portals & onchain tooling.' },
+    contact: { title: 'Contact', body: 'crew@sopa.team' },
   },
   pt: {
-    solutions: { title: 'Soluções', body: 'Tecnologia criativa, WebGL e desenvolvimento de jogos.' },
-    contact: { title: 'Contato', body: 'hello@sopa.agency' },
+    solutions: { title: 'Soluções', body: 'Agentes de IA, engenharia de campanhas, portais e ferramentas onchain.' },
+    contact: { title: 'Contato', body: 'crew@sopa.team' },
   },
 } as const;
 
@@ -146,10 +146,22 @@ export default function LayoutClient({
           className="fixed inset-0 z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 pointer-events-none transition-opacity duration-700"
           style={{ opacity: 1 - scrollP }}
         >
-          <div className="page-anim font-futura pointer-events-auto">
-            <h1 className="text-4xl md:text-5xl font-medium mb-4 tracking-tight">{t.title}</h1>
-            <p className="text-lg md:text-xl">{t.description}</p>
-            <span className="mt-10 text-xs opacity-40 animate-pulse pointer-events-auto">scroll ↓</span>
+          <div className="page-anim font-futura pointer-events-auto max-w-3xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-mono text-amber-300 backdrop-blur-sm">
+              <span>Web</span>
+              <span className="opacity-40">·</span>
+              <span>AI</span>
+              <span className="opacity-40">·</span>
+              <span>Base</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-3 tracking-tight">{t.title}</h1>
+            <p className="text-xl md:text-2xl font-semibold text-amber-300/95 mb-4 tracking-tight">
+              {t.tagline}
+            </p>
+            <p className="text-sm md:text-base text-white/80 max-w-2xl mx-auto leading-relaxed">
+              {t.description}
+            </p>
+            <span className="mt-10 inline-block text-xs opacity-40 animate-pulse pointer-events-auto">scroll ↓</span>
           </div>
         </div>
       )}

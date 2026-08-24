@@ -46,13 +46,28 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
           className="sticky top-24"
           style={{ zIndex: i + 1 }}
         >
-          <div className="grid gap-6 rounded-2xl border border-white/15 bg-black/70 p-8 backdrop-blur-md md:grid-cols-12 md:p-12 mb-6">
-            <div className="md:col-span-2 font-mono text-sm text-white/60">{s.num}</div>
-            <div className="md:col-span-5">
-              <h3 className="text-2xl font-semibold mb-4">{s.title}</h3>
-              <p className="text-sm leading-relaxed text-white/70">
+          <div className="grid gap-6 rounded-2xl border border-white/15 bg-black/80 p-8 backdrop-blur-md md:grid-cols-12 md:p-12 mb-6 hover:border-amber-300/40 transition-colors">
+            <div className="md:col-span-2 flex md:flex-col items-center md:items-start justify-between">
+              <div className="font-mono text-2xl font-bold text-amber-300">{s.num}</div>
+              <div className="text-3xl mt-2">{s.icon}</div>
+            </div>
+            <div className="md:col-span-10 space-y-4">
+              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">{s.title}</h3>
+              <p className="text-base leading-relaxed text-white/80">
                 {locale === 'pt' ? s.body.pt : s.body.en}
               </p>
+              {s.tags && s.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {s.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/15 bg-white/5 px-3 py-1 font-mono text-xs text-white/60"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

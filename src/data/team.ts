@@ -38,17 +38,17 @@ export const members: Member[] = [
 
 export const team = {
   en: {
-    title: "Team",
-    "page-title": "SOPA | Team",
-    subtitle: "Our core team of specialists.",
-    description: "Meet the people behind SOPA Agency.",
+    title: "The Crew",
+    "page-title": "SOPA | Crew",
+    subtitle: "Builders who post, and posters who build.",
+    description: "Meet the crew behind SOPA Agency.",
     skills: "skills",
   },
   pt: {
-    title: "Equipe",
-    "page-title": "SOPA | Equipe",
-    subtitle: "Nossa equipe principal de especialistas.",
-    description: "Conheça as pessoas por trás da SOPA Agency.",
+    title: "A Crew",
+    "page-title": "SOPA | Crew",
+    subtitle: "Builders que postam, e posters que constroem.",
+    description: "Conheça a crew por trás da SOPA Agency.",
     skills: "skills",
   },
 };

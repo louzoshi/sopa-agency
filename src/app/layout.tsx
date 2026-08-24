@@ -42,7 +42,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "SOPA AGENCY",
-  description: "SOPA is a creative technology and game development agency.",
+  description: "A creative + engineering studio that breaks the barrier between the old internet and the new one — brands, culture, AI agents, and onchain, built to actually ship.",
 };
 
 export default function RootLayout({

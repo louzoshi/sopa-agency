@@ -131,11 +131,40 @@ export default function Contact({ title, locale }: { title?: string; locale: str
   return (
     <section className="max-w-3xl mx-auto px-6 py-16">
       <h2 className="text-3xl font-bold mb-2 page-title-anim">{title}</h2>
-      <p className="mb-8 opacity-70 page-title-anim page-title-anim-d1">
+      <p className="mb-6 opacity-70 page-title-anim page-title-anim-d1">
         {locale === 'pt'
           ? 'Descreva o projeto em linhas gerais. Nosso agente ajuda a definir o escopo.'
           : 'Describe the project in broad strokes. Our agent can help you build your project scope.'}
       </p>
+
+      {/* Direct Contact Bar */}
+      <div className="mb-8 flex flex-wrap gap-3 font-mono text-xs page-anim">
+        <a
+          href="mailto:crew@sopa.team"
+          className="flex items-center gap-2 rounded-xl border border-white/15 bg-black/40 px-3.5 py-2 text-white/80 hover:border-amber-300 hover:text-amber-300 transition-colors"
+        >
+          <span>✉️</span>
+          <span>crew@sopa.team</span>
+        </a>
+        <a
+          href="https://warpcast.com/~/channel/gnars"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 rounded-xl border border-white/15 bg-black/40 px-3.5 py-2 text-white/80 hover:border-amber-300 hover:text-amber-300 transition-colors"
+        >
+          <span>🟪</span>
+          <span>Farcaster /gnars</span>
+        </a>
+        <a
+          href="https://sopa.team"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 rounded-xl border border-white/15 bg-black/40 px-3.5 py-2 text-white/80 hover:border-amber-300 hover:text-amber-300 transition-colors"
+        >
+          <span>🌐</span>
+          <span>sopa.team</span>
+        </a>
+      </div>
 
       <form
         className="page-anim rounded-2xl border border-white/15 bg-black/40 p-6 backdrop-blur-sm md:p-8"
