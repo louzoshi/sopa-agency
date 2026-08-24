@@ -18,15 +18,10 @@ export default function ApplyModal({ locale, onClose }: { locale: string; onClos
     if (!handle.trim() || !about.trim()) return;
     setStatus('sending');
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: handle,
-          email: github ? `${github}@github` : `${handle}@hive`,
-          message: `[APPLICATION] ${about}`,
-          types: locale === 'pt' ? 'aplicação — entrar no coletivo' : 'application — join the collective',
-        }),
+        body: JSON.stringify({ handle, github, about }),
       });
       setStatus(res.ok ? 'sent' : 'error');
     } catch {
