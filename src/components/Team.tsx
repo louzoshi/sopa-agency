@@ -108,6 +108,23 @@ export default function Team({ title, subtitle, locale }: { title?: string; subt
           <Card key={m.handle} member={m} locale={locale} delay={Math.min(i * 22, 300)} />
         ))}
       </div>
+
+      {/* join-the-collective CTA */}
+      <div className="mt-12 text-center page-anim">
+        <div className="inline-block rounded-xl border border-white/20 bg-black/60 px-5 py-2 font-mono text-xs tracking-widest text-amber-200 backdrop-blur-sm">
+          [ {locale === 'pt' ? 'entrar no coletivo' : 'join the collective'} ]
+        </div>
+        <p className="mt-3 text-sm text-white/70">
+          {locale === 'pt' ? 'Faz parte da agência SOPA?' : 'Part of the SOPA agency?'}
+        </p>
+        <a
+          href="/contact"
+          onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent('sopa:navigate', { detail: 'contact' })); }}
+          className="mt-2 inline-block font-mono text-sm text-amber-300 hover:text-amber-200 transition-colors"
+        >
+          {locale === 'pt' ? 'candidatar perfil →' : 'apply with your profile →'}
+        </a>
+      </div>
     </section>
   );
 }
