@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 const GA_ID = 'G-HWM0ZNJJVF';
+void GA_ID; // kept for reference; script tag lives in app/layout.tsx
 
 declare global {
   interface Window {
@@ -18,17 +19,10 @@ declare global {
 export default function Analytics({ section }: { section?: string }) {
   const pathname = usePathname();
 
-  // load gtag once
+  // gtag script is server-rendered in app/layout.tsx; just ensure the shim exists
   useEffect(() => {
-    const id = GA_ID;
-    const s = document.createElement('script');
-    s.async = true;
-    s.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-    document.head.appendChild(s);
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function gtag(...args: unknown[]) { window.dataLayer.push(args); };
-    window.gtag('js', new Date());
-    window.gtag('config', id);
+    if (!window.gtag) window.gtag = function gtag(...args: unknown[]) { window.dataLayer.push(args); };
   }, []);
 
   // fire page_view whenever section/pathname changes (SPA nav)
