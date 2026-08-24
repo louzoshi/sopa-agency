@@ -1,6 +1,6 @@
 // src/components/Contact.tsx
 // sopa.team/contato port: terminal-styled brief form + short LLM follow-up chat.
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // pill options are [en, pt] pairs — same value submitted either way
 const TYPES = [
@@ -75,6 +75,10 @@ const inputCls =
 
 export default function Contact({ title, locale }: { title?: string; locale: string }) {
   const L = LABELS[locale as keyof typeof LABELS] ?? LABELS.en;
+  const [llm, setLlm] = useState(false);
+  useEffect(() => {
+    fetch('/api/contact/config').then(r => r.json()).then(d => setLlm(Boolean(d.llm))).catch(() => setLlm(false));
+  }, []);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [types, setTypes] = useState<Set<string>>(new Set());
@@ -285,12 +289,14 @@ export default function Contact({ title, locale }: { title?: string; locale: str
                 ? 'enviar brief →'
                 : 'send brief →'}
             </button>
+            {llm && (
             <button
               type="button"
               className="rounded-lg border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
             >
               {locale === 'pt' ? 'falar com nosso agente' : 'talk to our agent'}
             </button>
+            )}
           </div>
         </div>
       </form>
