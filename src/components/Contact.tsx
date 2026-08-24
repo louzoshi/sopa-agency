@@ -9,6 +9,25 @@ const MAX_TURNS = 3;
 
 type Turn = { role: 'user' | 'assistant'; content: string };
 
+const LABELS = {
+  en: {
+    name: 'name / collective', namePh: 'who\'s calling',
+    email: 'email / @', emailPh: 'so we can reply',
+    whatIs: 'what is it — mark as many as apply',
+    budget: 'budget', deadline: 'deadline',
+    tellMore: 'tell us more',
+    msgPh: 'the project, the vibe, references, links to what already exists...',
+  },
+  pt: {
+    name: 'nome / coletivo', namePh: 'quem tá chamando',
+    email: 'email / @', emailPh: 'pra gente responder',
+    whatIs: 'o que é — pode marcar mais de um',
+    budget: 'orçamento', deadline: 'prazo',
+    tellMore: 'conta mais',
+    msgPh: 'o projeto, a vibe, referências, links do que já existe...',
+  },
+} as const;
+
 function Pill({ label, on, onClick }: { label: string; on: boolean; onClick: () => void }) {
   return (
     <button
@@ -36,6 +55,7 @@ const inputCls =
   'w-full rounded-lg border border-white/20 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-white/25 focus:border-amber-300 focus:outline-none';
 
 export default function Contact({ title, locale }: { title?: string; locale: string }) {
+  const L = LABELS[locale as keyof typeof LABELS] ?? LABELS.en;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [types, setTypes] = useState<Set<string>>(new Set());
@@ -171,16 +191,16 @@ export default function Contact({ title, locale }: { title?: string; locale: str
         onSubmit={submit}
       >
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="nome / coletivo">
-            <input className={inputCls} placeholder="quem tá chamando" value={name} onChange={(e) => setName(e.target.value)} />
+          <Field label={L.name}>
+            <input className={inputCls} placeholder={L.namePh} value={name} onChange={(e) => setName(e.target.value)} />
           </Field>
-          <Field label="email / @">
-            <input className={inputCls} type="email" placeholder="pra gente responder" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Field label={L.email}>
+            <input className={inputCls} type="email" placeholder={L.emailPh} value={email} onChange={(e) => setEmail(e.target.value)} />
           </Field>
         </div>
 
         <div className="mt-6">
-          <div className="mb-2 text-[11px] text-white/40">o que é — pode marcar mais de um</div>
+          <div className="mb-2 text-[11px] text-white/40">{L.whatIs}</div>
           <div className="flex flex-wrap gap-2">
             {TYPES.map((t) => (
               <Pill key={t} label={t} on={types.has(t)} onClick={() => toggleType(t)} />
@@ -190,7 +210,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
 
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           <div>
-            <div className="mb-2 text-[11px] text-white/40">orçamento</div>
+            <div className="mb-2 text-[11px] text-white/40">{L.budget}</div>
             <div className="flex flex-wrap gap-2">
               {BUDGETS.map((b) => (
                 <Pill key={b} label={b} on={budget === b} onClick={() => setBudget(budget === b ? null : b)} />
@@ -198,7 +218,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
             </div>
           </div>
           <div>
-            <div className="mb-2 text-[11px] text-white/40">prazo</div>
+            <div className="mb-2 text-[11px] text-white/40">{L.deadline}</div>
             <div className="flex flex-wrap gap-2">
               {DEADLINES.map((d) => (
                 <Pill key={d} label={d} on={deadline === d} onClick={() => setDeadline(deadline === d ? null : d)} />
@@ -208,13 +228,13 @@ export default function Contact({ title, locale }: { title?: string; locale: str
         </div>
 
         <div className="mt-6">
-          <Field label="conta mais">
+          <Field label={L.tellMore}>
             <div className="relative">
               <span className="pointer-events-none absolute left-3 top-2.5 font-mono text-sm text-amber-300">&gt;</span>
               <textarea
                 className={`${inputCls} pl-7 leading-relaxed`}
                 rows={4}
-                placeholder="o projeto, a vibe, referências, links do que já existe..."
+                placeholder={L.msgPh}
                 value={msg}
                 onChange={(e) => setMsg(e.target.value)}
               />
