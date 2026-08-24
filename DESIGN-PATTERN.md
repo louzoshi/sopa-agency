@@ -43,8 +43,10 @@ The background consists of a shared WebGL canvas (`WebGL.tsx`) featuring the gol
 | **Ghost Watermark** | `font-sans`, uppercase, `text-[28vh]`, `color: rgba(255,255,255,0.1)`, `letter-spacing: 2vh` | `page-anim` |
 | **Page Title (`<h2>`)** | `text-3xl md:text-4xl font-bold tracking-tight text-white` | `page-title-anim` (Slides right &rarr; left) |
 | **Page Subtitle (`<p>`)** | `text-base md:text-lg opacity-70 text-white/70` | `page-title-anim page-title-anim-d1` |
-| **Hero Title (`<h1>`)** | `font-futura text-4xl md:text-5xl font-medium tracking-tight` | `page-anim` |
+| **Hero Title (`<h1>`)** | `font-display text-4xl md:text-5xl font-medium tracking-tight` (theme-aware display font) | `page-anim` |
 | **Card / Item Title** | `text-xl font-semibold text-white` | Inherited from container / card animation |
+
+> Fonts are never hard-coded by name — use semantic roles (`font-sans` body, `font-display` headings, `font-mono` code). The actual typefaces come from the runtime-switchable theme system; see DEVELOPMENT_GUIDE.md §4.
 
 ---
 

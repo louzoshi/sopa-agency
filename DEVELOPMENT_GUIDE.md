@@ -89,7 +89,7 @@ Fonts are user-switchable at runtime via the pill in the bottom-right corner (`T
 3. Tailwind picks them up via `@theme inline` → `font-sans`, `font-display`, `font-mono` utilities.
 4. `ThemeSwitcher.tsx` sets `document.documentElement.dataset.fontTheme`.
 
-**Usage:** body text inherits automatically; display/headings use `.font-futura`/`.font-display` class or `font-display` utility. To add a theme: load the font in layout.tsx, add a `[data-font-theme]` block in globals.css, add an entry to `THEMES` in ThemeSwitcher.tsx.
+**Usage:** body text inherits automatically; display/headings use `.font-display` (theme-aware) or `font-display` utility. To add a theme: load the font in layout.tsx, add a `[data-font-theme]` block in globals.css, add an entry to `THEMES` in ThemeSwitcher.tsx.
 
 ## 5. Colour Palette (Amber/Black)
 
