@@ -304,6 +304,26 @@ export default function Contact({ title, locale }: { title?: string; locale: str
           )}
         </div>
       )}
+
+      {/* cross-links to Work and Solutions */}
+      <div className="mt-16 grid gap-4 sm:grid-cols-2">
+        {([
+          { href: '/work', title: { en: 'See Our Work', pt: 'Veja Nosso Trabalho' }, sub: { en: 'Projects in production — agents, portals, onchain.', pt: 'Projetos em produção — agentes, portais, onchain.' } },
+          { href: '/solutions', title: { en: 'Explore Solutions', pt: 'Explore as Soluções' }, sub: { en: 'AI, campaigns, tooling and onchain revenue.', pt: 'IA, campanhas, ferramentas e receita onchain.' } },
+        ] as const).map(c => (
+          <a
+            key={c.href}
+            href={`/${locale}${c.href}`}
+            onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent('sopa:navigate', { detail: c.href.slice(1) })); }}
+            className="group rounded-2xl border border-white/15 bg-black/80 backdrop-blur-md p-6 hover:border-amber-300/40 transition-colors"
+          >
+            <h3 className="text-lg font-semibold group-hover:text-amber-200 transition-colors">
+              {c.title[locale as keyof typeof c.title]} <span className="text-amber-300">→</span>
+            </h3>
+            <p className="mt-2 text-sm text-white/60">{c.sub[locale as keyof typeof c.sub]}</p>
+          </a>
+        ))}
+      </div>
     </section>
   );
 }

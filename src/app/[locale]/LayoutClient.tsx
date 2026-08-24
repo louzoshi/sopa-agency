@@ -19,6 +19,7 @@ import { team } from "@/data/team";
 import Team from "@/components/Team";
 import Solutions from "@/components/Solutions";
 import Process from "@/components/Process";
+import CTA from "@/components/CTA";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -113,6 +114,14 @@ export default function LayoutClient({
       setSection(s);
     });
   };
+
+  // cross-component navigation (Contact page CTA cards)
+  useEffect(() => {
+    const h = (e: Event) => navigate((e as CustomEvent).detail as Section);
+    window.addEventListener('sopa:navigate', h);
+    return () => window.removeEventListener('sopa:navigate', h);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [section]);
 
   const list = work[l]?.list ?? [];
 
@@ -227,22 +236,35 @@ export default function LayoutClient({
                   </div>
                 ))}
               </div>
+              <CTA locale={locale} />
             </div>
           )}
-          {section === 'team' && <Team title={team[l]?.title} subtitle={team[l]?.subtitle} locale={locale} />}
+          {section === 'team' && (
+            <>
+              <Team title={team[l]?.title} subtitle={team[l]?.subtitle} locale={locale} />
+              <CTA locale={locale} />
+            </>
+          )}
           {section === 'feed' && (
             <div className="max-w-7xl mx-auto px-6 py-16">
               <h2 className="text-3xl font-bold mb-2 page-title-anim">{feed[l]?.title}</h2>
               <p className="mt-4 opacity-50 page-anim page-anim-d1">Coming soon.</p>
+              <CTA locale={locale} />
             </div>
           )}
           {section === 'solutions' && (
             <>
               <Solutions title={ex.solutions.title} locale={locale} />
               <Process locale={locale} />
+              <CTA locale={locale} />
             </>
           )}
-                  {section === 'about' && <About locale={locale} />}
+                  {section === 'about' && (
+                    <>
+                      <About locale={locale} />
+                      <CTA locale={locale} />
+                    </>
+                  )}
                   {section === 'contact' && <Contact title={ex.contact.title} locale={locale} />}
         </div>
       </main>
