@@ -12,11 +12,11 @@ export function withWipe(onNavigate: () => void) {
 export default function TransitionOverlay() {
   const pathname = usePathname();
 
-  // ponytail: home is '/' or '/en' — covers locale-less and explicit-locale home
-  const isHome = pathname === '/' || pathname === '/en';
+  // home = /en or /pt exactly (locale-aware, no hardcode)
+  const isHome = /^\/(en|pt)\/?$/.test(pathname);
   const targetState = isHome ? 'bar' : 'hide';
 
-  const [state, setState] = useState<'wipe' | 'bar' | 'hide'>('wipe');
+  const [state, setState] = useState<'wipe' | 'bar' | 'hide'>(targetState);
   const [prevPath, setPrevPath] = useState(pathname);
 
   // reset to wipe during render on route change (React-recommended, no effect)
