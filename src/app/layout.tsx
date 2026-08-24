@@ -41,6 +41,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://sopa.team"),
   title: "SOPA AGENCY",
   description: "A creative + engineering studio that breaks the barrier between the old internet and the new one — brands, culture, AI agents, and onchain, built to actually ship.",
 };

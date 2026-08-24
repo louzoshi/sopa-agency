@@ -7,13 +7,49 @@ import { site } from '@/data/site';
 
 const SECTIONS = new Set(['home', 'work', 'team', 'feed', 'solutions', 'about', 'contact']);
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug?: string[] }> }) {
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug?: string[] }> }): Promise<Metadata> {
   const { locale, slug } = await params;
   const siteData = site[locale as keyof typeof site];
   if (!siteData) notFound();
+
+  const section = slug?.[0];
+  const sectionTitle = section 
+    ? section.charAt(0).toUpperCase() + section.slice(1) 
+    : '';
+
+  const title = sectionTitle 
+    ? `${sectionTitle} | ${siteData.title}` 
+    : siteData['page-title'] || siteData.title;
+
+  const currentPath = slug ? `/${locale}/${slug.join('/')}` : `/${locale}`;
+  const enPath = slug ? `/en/${slug.join('/')}` : '/en';
+  const ptPath = slug ? `/pt/${slug.join('/')}` : '/pt';
+
   return {
-    title: siteData['page-title'] || siteData.title,
+    title,
     description: siteData.description,
+    alternates: {
+      canonical: currentPath,
+      languages: {
+        'en': enPath,
+        'pt-BR': ptPath,
+      },
+    },
+    openGraph: {
+      title,
+      description: siteData.description,
+      url: currentPath,
+      siteName: siteData.title,
+      locale: locale === 'en' ? 'en_US' : 'pt_BR',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: siteData.description,
+    },
   };
 }
 

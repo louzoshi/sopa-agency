@@ -43,7 +43,6 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
           ? 'Sistemas sob medida, construídos em torno da sua operação — de agentes de IA a receita onchain. Entendemos o problema, desenhamos, construímos e colocamos em produção.'
           : 'Custom-built systems engineered around your operation — from AI agents to onchain revenue. We understand the problem, design the system, build it, and put it into production.'}
       </p>
-      <div className="pb-[45vh]" /> {/* runway so the last cards can stack before section ends */}
       {solutions.map((s, i) => (
         <div
           key={s.num}
@@ -51,16 +50,8 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
           className="sticky top-24"
           style={{ zIndex: i + 1 }}
         >
-          <div className="grid gap-6 rounded-2xl border border-white/15 bg-black/80 p-8 backdrop-blur-md md:grid-cols-12 md:p-12 mb-6 hover:border-amber-300/40 transition-colors">
-            <div className="md:col-span-2 flex md:flex-col items-center md:items-start justify-between">
-              {s.image ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={s.image} alt="" loading="lazy" className="w-16 h-16 rounded-xl object-cover border border-white/15" />
-              ) : (
-                <div className="text-3xl mt-2">{s.icon}</div>
-              )}
-            </div>
-            <div className="md:col-span-10 space-y-4">
+          <div className="flex flex-col md:flex-row gap-8 rounded-2xl border border-white/15 bg-black/80 p-8 backdrop-blur-md md:p-12 mb-6 hover:border-amber-300/40 transition-colors items-center">
+            <div className="flex-1 space-y-4 w-full">
               <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">{s.title}</h3>
               <p className="text-base leading-relaxed text-white/80">
                 {locale === 'pt' ? s.body.pt : s.body.en}
@@ -78,9 +69,18 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
                 </div>
               )}
             </div>
+            <div className="w-full md:w-1/2 lg:w-5/12 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden bg-white/5 border border-white/10 aspect-video md:aspect-[4/3]">
+              {s.image ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={s.image} alt="" loading="lazy" className="w-full h-full object-cover" />
+              ) : (
+                <div className="text-8xl opacity-80">{s.icon}</div>
+              )}
+            </div>
           </div>
         </div>
       ))}
+      <div className="pb-[45vh]" /> {/* runway so the last cards can stack before section ends */}
     </section>
   );
 }
