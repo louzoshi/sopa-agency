@@ -66,10 +66,11 @@ export default function MemberPanel({ member, locale, onClose }: { member: Membe
   if (!member) return null;
 
   return (
-    <div className="fixed inset-0 z-[60]" onClick={onClose}>
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 pt-24" onClick={onClose}>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      <aside
-        className="absolute right-0 top-0 h-full w-full max-w-md overflow-y-auto border-l border-white/15 bg-black/90 p-8 backdrop-blur-xl page-anim"
+      <div
+        className="relative w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl border border-white/15 bg-black/90 p-8 shadow-[0_0_60px_rgba(255,204,0,0.08)] backdrop-blur-xl"
+        style={{ animation: 'modal-pop 0.25s cubic-bezier(0.34,1.56,0.64,1) both' }}
         onClick={e => e.stopPropagation()}
       >
         <button
@@ -80,15 +81,15 @@ export default function MemberPanel({ member, locale, onClose }: { member: Membe
           ✕
         </button>
 
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-4 mb-6">
           {member.ai ? (
-            <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400/80 to-pink-500/80 text-sm font-bold text-black">AI</span>
+            <span className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/80 to-pink-500/80 text-lg font-bold text-black">AI</span>
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={`https://images.hive.blog/u/${member.handle}/avatar`} alt="" className="h-14 w-14 rounded-lg object-cover ring-1 ring-white/20" />
+            <img src={`https://images.hive.blog/u/${member.handle}/avatar`} alt="" className="h-16 w-16 rounded-xl object-cover ring-1 ring-white/20" />
           )}
           <div>
-            <div className="text-lg font-semibold">@{member.handle}</div>
+            <div className="text-2xl font-bold tracking-tight">@{member.handle}</div>
             <div className="font-mono text-xs text-white/40">
               {member.github && <>gh/{member.github} · </>}
               {locale === 'pt' ? (member.ai ? 'agente autônomo' : 'humano verificável') : (member.ai ? 'autonomous agent' : 'verifiable human')}
@@ -161,7 +162,7 @@ export default function MemberPanel({ member, locale, onClose }: { member: Membe
             ? 'dados públicos ao vivo: GitHub Events API / Hive blockchain. verificável, não vibes.'
             : 'live public data: GitHub Events API / Hive blockchain. verifiable, not vibes.'}
         </div>
-      </aside>
+      </div>
     </div>
   );
 }
