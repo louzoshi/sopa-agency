@@ -164,4 +164,37 @@ body {
   transform: scale(1.05);
 }
 
+/* Process (How It Works): phases light up on scroll; diagrams stagger in.
+   Respects prefers-reduced-motion by skipping the transitions entirely. */
+.process-phase {
+  opacity: 0.35;
+  transition: opacity 0.6s ease;
+}
+.process-phase.phase-on {
+  opacity: 1;
+}
+.process-phase .diag-node,
+.process-phase .diag-arrow {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.process-phase.phase-on .diag-node,
+.process-phase.phase-on .diag-arrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* progressive reveal: nodes appear left-to-right like a system being built */
+.process-phase.phase-on .diag-node:nth-child(1) { transition-delay: 0.05s; }
+.process-phase.phase-on .diag-arrow { transition-delay: 0.2s; }
+@media (prefers-reduced-motion: reduce) {
+  .process-phase,
+  .process-phase .diag-node,
+  .process-phase .diag-arrow {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 

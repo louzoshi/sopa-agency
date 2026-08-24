@@ -18,6 +18,7 @@ import { workItems, work, workCategories, type WorkItem, type WorkCategory } fro
 import { team } from "@/data/team";
 import Team from "@/components/Team";
 import Solutions from "@/components/Solutions";
+import Process from "@/components/Process";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -235,7 +236,12 @@ export default function LayoutClient({
               <p className="mt-4 opacity-50 page-anim page-anim-d1">Coming soon.</p>
             </div>
           )}
-          {section === 'solutions' && <Solutions title={ex.solutions.title} locale={locale} />}
+          {section === 'solutions' && (
+            <>
+              <Solutions title={ex.solutions.title} locale={locale} />
+              <Process locale={locale} />
+            </>
+          )}
                   {section === 'about' && <About locale={locale} />}
                   {section === 'contact' && <Contact title={ex.contact.title} locale={locale} />}
         </div>
