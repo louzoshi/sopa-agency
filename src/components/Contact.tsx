@@ -91,6 +91,20 @@ export default function Contact({ title, locale }: { title?: string; locale: str
   const [followUp, setFollowUp] = useState('');
   const chatEnd = useRef<HTMLDivElement>(null);
 
+  // fire-and-forget lead log: name+email identify, message appends to history
+  const logLead = (message: string) => {
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name, email,
+        message, role: 'user', locale,
+        types: [...types].join(', '),
+        budget, deadline,
+      }),
+    }).catch(() => {});
+  };
+
   const briefPayload = (message: string) => ({
     name,
     email,
@@ -116,6 +130,13 @@ export default function Contact({ title, locale }: { title?: string; locale: str
       if (!res.ok) throw new Error(data?.error ?? 'erro');
       setTurn((t) => t + 1);
       setChat((c) => [...c, { role: 'assistant', content: data.reply ?? '' }]);
+      if (data.reply) {
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message: data.reply, role: 'assistant', locale }),
+        }).catch(() => {});
+      }
       setStatus(turn + 1 >= MAX_TURNS ? 'done' : 'chat');
       setTimeout(() => chatEnd.current?.scrollIntoView({ behavior: 'smooth' }), 50);
     } catch {
@@ -127,7 +148,17 @@ export default function Contact({ title, locale }: { title?: string; locale: str
   async function startChat() {
     const text = locale === 'pt' ? 'oi, quero conversar com o agente' : 'hi, I want to talk to the agent';
     setChat([{ role: 'user', content: text }]);
+    logLead(text);
     await callBot(text);
+  }
+
+  // "send brief" — save the lead, no bot conversation
+  function sendBrief(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !msg.trim()) return;
+    setStatus('sending');
+    logLead(msg);
+    setTimeout(() => setStatus('done'), 400);
   }
 
   async function submit(e: React.FormEvent) {
@@ -155,6 +186,13 @@ export default function Contact({ title, locale }: { title?: string; locale: str
       if (!res.ok) throw new Error(data?.error ?? 'erro');
       setTurn((t) => t + 1);
       setChat([...next, { role: 'assistant', content: data.reply ?? '' }]);
+      if (data.reply) {
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message: data.reply, role: 'assistant', locale }),
+        }).catch(() => {});
+      }
       if (turn + 1 >= MAX_TURNS) setStatus('done');
       setTimeout(() => chatEnd.current?.scrollIntoView({ behavior: 'smooth' }), 50);
     } catch {
@@ -229,7 +267,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
 
       <form
         className="page-anim rounded-2xl border border-white/15 bg-black/40 p-6 backdrop-blur-sm md:p-8"
-        onSubmit={submit}
+        onSubmit={sendBrief}
       >
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label={L.name}>
@@ -321,7 +359,25 @@ export default function Contact({ title, locale }: { title?: string; locale: str
         </div>
       </form>
 
-      {status !== 'idle' && status !== 'error' && (
+      {/* brief-only submission: no bot, just confirmation */}
+      {status === 'done' && chat.length === 0 && (
+        <div className="mt-4 rounded-xl border border-white/15 bg-black/40 p-5 backdrop-blur-sm page-anim">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[11px] text-amber-200">
+              ● {locale === 'pt' ? 'Brief recebido. Nossos agentes respondem em breve 🤙' : 'Brief received. Our agents will reply soon 🤙'}
+            </span>
+            <button
+              type="button"
+              onClick={reset}
+              className="rounded-lg bg-amber-300 px-5 py-2 text-xs font-semibold text-black transition-opacity hover:bg-amber-200"
+            >
+              {locale === 'pt' ? 'fechar ✓' : 'close ✓'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {status !== 'idle' && status !== 'error' && chat.length > 0 && (
         <div className="mt-4 rounded-xl border border-white/15 bg-black/40 p-5 backdrop-blur-sm page-anim">
           <div className="mb-3 font-mono text-[10px] uppercase tracking-widest text-white/40">
                       {'>'} {locale === 'pt' ? 'bot de plantão' : 'on-duty bot'} · turno {Math.min(turn, MAX_TURNS)}/{MAX_TURNS}
