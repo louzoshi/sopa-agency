@@ -118,7 +118,7 @@ export default function About({ locale }: { locale: string }) {
 const en = {
   hero: {
     // badge: '◢◤ SOPA',
-    title: 'Culture that ships',
+    title: 'About',
     tagline: 'A creative + engineering studio that breaks the barrier between the old internet and the new one — brands, culture, AI agents, and onchain, built to actually ship.',
     body: 'We work both worlds: the legacy brand that needs reach, and the protocol that needs a soul. We turn culture into product — campaigns across every channel, autonomous AI agents that run them.',
     highlight: '⚡ Builders bringing an audience the new tech doesn\'t have, and the tooling the old one is missing.'
@@ -228,7 +228,7 @@ const en = {
 const pt = {
   hero: {
     // badge: '◢◤ SOPA',
-    title: 'Cultura que entrega',
+    title: 'Sobre',
     tagline: 'Um estúdio criativo e de engenharia que quebra a barreira entre a velha internet e a nova — marcas, cultura, agentes de IA e onchain, feitos para realmente entregar.',
     body: 'Trabalhamos os dois mundos: a marca tradicional que precisa de alcance e o protocolo que precisa de alma. Transformamos cultura em produto — campanhas em todos os canais e agentes autônomos de IA que as operam.',
     highlight: '⚡ Builders trazendo o público que a nova tecnologia não tem, e as ferramentas que faltam na antiga.'
