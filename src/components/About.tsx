@@ -165,7 +165,7 @@ const en = {
   stack: {
     title: '🧱 The Stack',
     items: [
-      'TypeScript', 'Next.js', 'React', 'Anthropic', 'AI Agents', 'viem', 'Safe', 'Base', 'Farcaster', 'Hive', 'Supabase', 'Vercel'
+      'TypeScript', 'Next.js', 'React', 'Anthropic', 'AI Agents', 'AI Video', 'Image Generation', 'Databases', 'Blockchain', 'Social Media', 'Enterprise Dashboards', 'viem', 'Safe', 'Base', 'Farcaster', 'Hive', 'Supabase', 'Vercel'
     ]
   },
   model: {
@@ -275,7 +275,7 @@ const pt = {
   stack: {
     title: '🧱 A Stack',
     items: [
-      'TypeScript', 'Next.js', 'React', 'Anthropic', 'AI Agents', 'viem', 'Safe', 'Base', 'Farcaster', 'Hive', 'Supabase', 'Vercel'
+      'TypeScript', 'Next.js', 'React', 'Anthropic', 'AI Agents', 'Vídeo com IA', 'Geração de Imagens', 'Bancos de Dados', 'Blockchain', 'Redes Sociais', 'Dashboards Corporativos', 'viem', 'Safe', 'Base', 'Farcaster', 'Hive', 'Supabase', 'Vercel'
     ]
   },
   model: {
