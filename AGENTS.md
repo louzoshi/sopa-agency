@@ -11,3 +11,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Locales
 
 The site is bilingual (en / pt-BR). When creating or updating page content (data files in `src/data/*.ts`, section components, menu entries), ALWAYS add it to ALL locales — `en` AND `pt` objects. Never add a locale-keyed entry to only one language.
+
+# Guides
+
+- `DEVELOPMENT_GUIDE.md` — how to add/modify sections: LayoutClient pattern, data-file structure, component conventions. Read before adding pages.
+- `DESIGN-PATTERN.md` — UI/UX, layout, and animation standards for the site. Follow when building or changing page visuals.
