@@ -12,9 +12,6 @@ export default function About({ locale }: { locale: string }) {
         <h2 className="text-3xl sm:text-4xl font-bold page-title-anim">{t.hero.title}</h2>
         <p className="max-w-3xl text-xl font-medium text-white/90 leading-relaxed page-title-anim page-title-anim-d1">{t.hero.tagline}</p>
         <p className="max-w-3xl text-base opacity-75 leading-relaxed">{t.hero.body}</p>
-        <div className="inline-block rounded-xl border border-amber-300/30 bg-amber-300/10 px-4 py-2 font-mono text-xs text-amber-200">
-          {t.hero.highlight}
-        </div>
       </div>
 
       {/* How We're Different (Bento Box) */}

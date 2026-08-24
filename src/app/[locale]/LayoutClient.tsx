@@ -223,7 +223,9 @@ export default function LayoutClient({
         {section === 'home' && (
           <>
             <ScrollShowcase />
-            <CTA locale={locale} />
+            <div className="relative z-[20]">
+              <CTA locale={locale} />
+            </div>
           </>
         )}
         <div key={section}>
