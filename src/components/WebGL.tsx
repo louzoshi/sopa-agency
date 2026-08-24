@@ -32,6 +32,7 @@ uniform sampler2D iChannel0;
 uniform sampler2D iChannel1;
 uniform float orbOpacity;
 uniform float intensity;
+uniform vec3 uTint;
 out vec4 outColor;
 
 #define R(p, a) p = p * cos(a) + vec2(-p.y, p.x) * sin(a)
@@ -97,8 +98,7 @@ float Map(vec3 p, float scale) {
 
 vec3 GetColor(vec3 p) {
     float amount = clamp((1.5 - length(p)) / 2.0, 0.0, 1.0);
-    // SOPA Yellow
-    vec3 amber = vec3(1.0, 0.8, 0.0);
+    vec3 amber = uTint;
     // Changing colors over time
     vec3 hue = 0.5 + 0.5 * cos(6.28319 * (iTime * 0.1 + vec3(0.0, 0.33, 0.67)));
     float mixFactor = smoothstep(0.26, 0.4, amount);
@@ -118,7 +118,7 @@ void main() {
   float rz = flow(p) ;
   p /= exp(mod(2.1,2.1));
   rz *= (3.2-spiral(p,.5))*.7 * audio1 ; // intensity / thickness of ring
-  vec3 col = vec3(0.1, 0.08, 0.0) / rz; // SOPA pure yellow/amber glow
+  vec3 col = (uTint * 0.1) / rz; 
   col=pow(abs(col),vec3(1.01)) - (abs((iMouse.x ))*.00005);
   outColor+= vec4(col,1.0);
 
@@ -151,10 +151,12 @@ void main() {
 // and 350-point additive sprite clouds.
 const ORB_OPACITY: Record<string, number> = { home: 1.0, work: 0.3, team: 0.3, feed: 0.4, solutions: 0.5, about: 0.4, contact: 0.3 };
 
-export default function WebGL({ section = 'home', open, onProgress }: { section?: string; open?: number; onProgress?: (progress: number) => void }) {
+export default function WebGL({ section = 'home', open, onProgress, tint = [1.0, 0.8, 0.0] }: { section?: string; open?: number; onProgress?: (progress: number) => void; tint?: [number, number, number] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const openRef = useRef<number | undefined>(open);
+  const tintRef = useRef<[number, number, number]>(tint);
   useEffect(() => { openRef.current = open; }, [open]);
+  useEffect(() => { tintRef.current = tint; }, [tint]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -191,6 +193,7 @@ export default function WebGL({ section = 'home', open, onProgress }: { section?
       adj: { type: 'f', value: 0.2 - window.innerHeight / window.innerWidth },
       orbOpacity: { type: 'f', value: 1.0 },
       intensity: { type: 'f', value: 1.0 },
+      uTint: { type: 'v3', value: new THREE.Vector3(tintRef.current[0], tintRef.current[1], tintRef.current[2]) },
       iChannel0: { type: 't', value: tex1 },
       iChannel1: { type: 't', value: sprite },
     };
@@ -245,6 +248,11 @@ export default function WebGL({ section = 'home', open, onProgress }: { section?
       const d = timer.getDelta();
       uniforms.iTime.value += d;
       uniforms.audio1.value = 128.0 / 48.0 + Math.random() * 0.1;
+      
+      // smoothly transition tint color
+      const currentTint = tintRef.current;
+      uniforms.uTint.value.lerp(new THREE.Vector3(currentTint[0], currentTint[1], currentTint[2]), Math.min(1, d * 2.0));
+
       // orb state: menu sections tween to their per-section opacity;
       // home hero is scroll-driven ("open" 0..1 — orb unfolds/dissolves as you scroll in)
       const orbTarget = openRef.current !== undefined ? (1 - openRef.current) : (ORB_OPACITY[section] ?? 1.0);

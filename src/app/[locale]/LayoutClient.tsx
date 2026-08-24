@@ -59,6 +59,7 @@ export default function LayoutClient({
   const [detailItem, setDetailItem] = useState<WorkItem | null>(null);
   const [progress, setProgress] = useState(0);
   const [workFilter, setWorkFilter] = useState<'all' | WorkCategory>('all');
+  const [hoveredWork, setHoveredWork] = useState<WorkItem | null>(null);
   // globe/video layer: home hero opens up (orb unfolds) as you scroll into the presentation
   const [scrollP, setScrollP] = useState(0); // 0 top of hero .. 1 fully into presentation
   // menu sections: orb opens on entry and STAYS open while on that section
@@ -164,7 +165,12 @@ export default function LayoutClient({
         data-hero-bg
       >
         <div className="absolute inset-0">
-          <WebGL section={section} open={orbOpen} onProgress={setProgress} />
+          <WebGL 
+            section={section} 
+            open={orbOpen} 
+            onProgress={setProgress} 
+            tint={section === 'work' && hoveredWork?.color ? hoveredWork.color : [1.0, 0.8, 0.0]} 
+          />
         </div>
       </div>
 
@@ -245,9 +251,28 @@ export default function LayoutClient({
                     key={i}
                     className="group relative overflow-hidden cursor-pointer work-tile"
                     onClick={() => item.video ? setReelUrl(item.video) : setDetailItem(item.detail ? item : null)}
+                    onMouseEnter={e => {
+                      setHoveredWork(item);
+                      e.currentTarget.querySelector('video')?.play().catch(() => {});
+                    }}
+                    onMouseLeave={e => {
+                      setHoveredWork(null);
+                      const v = e.currentTarget.querySelector('video');
+                      if (v) v.pause();
+                    }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={item.thumb} alt={item.title} loading="lazy" className="w-full aspect-video object-cover" />
+                    {item.preview && (
+                      <video
+                        src={item.preview}
+                        muted
+                        loop
+                        playsInline
+                        preload="none"
+                        className="absolute inset-0 w-full aspect-video object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      />
+                    )}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                       <span className="text-sm opacity-70">{item.subtitle}</span>
                       <span className="font-semibold">{item.title}</span>

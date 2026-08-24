@@ -17,18 +17,25 @@ export default function About({ locale }: { locale: string }) {
         </div>
       </div>
 
-      {/* How We're Different */}
+      {/* How We're Different (Bento Box) */}
       <div className="page-anim page-anim-d1 space-y-8">
         <div>
           <h3 className="text-2xl font-semibold mb-2">{t.different.title}</h3>
           <p className="max-w-2xl text-sm opacity-70">{t.different.subtitle}</p>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {t.different.items.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-white/15 bg-black/70 p-6 backdrop-blur-md hover:border-amber-300/50 transition-colors">
-              <div className="text-2xl mb-3">{item.icon}</div>
-              <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
-              <p className="text-sm opacity-70 leading-relaxed">{item.desc}</p>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {t.different.items.map((item, i) => (
+            <div 
+              key={item.title} 
+              className={`flex flex-col justify-between rounded-2xl border border-white/15 bg-black/70 p-8 backdrop-blur-md hover:border-amber-300/50 transition-colors ${
+                i === 1 || i === 2 ? 'lg:col-span-2' : ''
+              }`}
+            >
+              <div className="text-4xl mb-6">{item.icon}</div>
+              <div>
+                <h4 className="text-xl font-semibold mb-2">{item.title}</h4>
+                <p className="text-sm opacity-70 leading-relaxed max-w-md">{item.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -50,14 +57,19 @@ export default function About({ locale }: { locale: string }) {
         </div>
       </div>
 
-      {/* The Stack */}
-      <div className="page-anim page-anim-d1 space-y-6">
+      {/* The Stack (Marquee) */}
+      <div className="page-anim page-anim-d1 space-y-6 overflow-hidden relative">
         <h3 className="text-2xl font-semibold">{t.stack.title}</h3>
-        <div className="flex flex-wrap gap-2">
-          {t.stack.items.map((tech) => (
+        {/* Edge fade gradients */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+        
+        <div className="flex w-max animate-marquee space-x-3 pt-2 pb-2">
+          {/* Double the list for seamless infinite looping */}
+          {[...t.stack.items, ...t.stack.items, ...t.stack.items].map((tech, i) => (
             <span
-              key={tech}
-              className="rounded-lg border border-white/20 bg-white/5 px-3.5 py-1.5 font-mono text-xs text-white/85"
+              key={`${tech}-${i}`}
+              className="shrink-0 rounded-lg border border-white/20 bg-white/5 px-4 py-2 font-mono text-sm text-white/85 backdrop-blur-sm"
             >
               {tech}
             </span>

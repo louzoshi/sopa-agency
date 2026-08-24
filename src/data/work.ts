@@ -9,6 +9,8 @@ export interface WorkItem {
   category: 'events' | 'marketing' | 'production' | 'branding' | 'blockchain' | 'web3' | 'gamedev' | 'ai';
   // optional fullscreen video shown when the tile is clicked
   video?: string;
+  // optional muted looping preview played on tile hover (mp4/webm path or url)
+  preview?: string;
   // optional detail page shown in a modal when the tile is clicked (no video)
   detail?: {
     url?: string;
@@ -16,6 +18,8 @@ export interface WorkItem {
     sections: { heading: string; body: string }[];
     quote?: string;
   };
+  // optional brand color tint for the WebGL orb (RGB 0-1)
+  color?: [number, number, number];
 }
 
 // SOPA service/section tiles — thumbs reused from the ported grid.
@@ -29,6 +33,7 @@ export const workItems: WorkItem[] = [
     tags: "dashboards, data viz, webdev",
     category: "production",
     video: "https://vimeo.com/1191597286?fl=pl&fe=cm",
+    color: [0.2, 0.5, 1.0], // Blue tint
   },
   {
     title: "SkateHive Social Media",
@@ -37,6 +42,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/w2.png",
     tags: "social media, web3, community",
     category: "marketing",
+    color: [1.0, 0.2, 0.2], // Red tint
     detail: {
       url: "https://skatehive.app",
       intro:
@@ -78,6 +84,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/gnars.png",
     tags: "dao, web3, governance",
     category: "production",
+    color: [0.0, 0.8, 0.4], // Gnars green
   },
   {
     title: "DAO Treasures",
@@ -86,6 +93,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/w4.jpg",
     tags: "dao, treasury, web3",
     category: "production",
+    color: [0.0, 0.8, 0.4], // Gnars green
   },
   {
     title: "AI Agents",
@@ -94,6 +102,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/w5.jpeg",
     tags: "ai, agents, infra",
     category: "ai",
+    color: [0.4, 1.0, 0.6], // Morpheus neon green
   },
   {
     title: "Animation Studio",
@@ -102,6 +111,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/w6.jpg",
     tags: "animation, motion, 3d",
     category: "branding",
+    color: [1.0, 0.8, 0.0], // SOPA yellow (default)
   },
   {
     title: "Game Dev",
@@ -110,6 +120,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/w7.jpg",
     tags: "gamedev, webgl, threejs",
     category: "ai",
+    color: [0.8, 0.2, 1.0], // Purple
   },
   {
     title: "Swap",
@@ -118,6 +129,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/swaps.pro.png",
     tags: "blockchain, defi, web3",
     category: "blockchain",
+    color: [0.0, 0.6, 1.0], // Swaps blue
   },
   {
     title: "Blockchain",
@@ -126,6 +138,7 @@ export const workItems: WorkItem[] = [
     thumb: "/assets/images/work/keepkey.png",
     tags: "blockchain, defi, web3",
     category: "blockchain",
+    color: [0.1, 0.1, 0.9], // KeepKey blue
   },
 ];
 
