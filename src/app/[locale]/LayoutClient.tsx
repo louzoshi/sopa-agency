@@ -54,6 +54,7 @@ export default function LayoutClient({
   const VALID_SECTIONS = ['home', 'work', 'team', 'feed', 'solutions', 'about', 'contact'];
   const pathSection = (VALID_SECTIONS.find(s => pathname.startsWith(`/${locale}/${s}`)) ?? 'home') as Section;
   const [section, setSection] = useState<Section>(pathSection);
+  const isHome = section === 'home';
   const [reelUrl, setReelUrl] = useState<string | null>(null);
   const [detailItem, setDetailItem] = useState<WorkItem | null>(null);
   const [progress, setProgress] = useState(0);
@@ -293,7 +294,7 @@ export default function LayoutClient({
       <Footer locale={locale} />
 
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} onNavigate={navigate} />
-      <TransitionOverlay />
+      <TransitionOverlay hidden={!isHome} />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
       <ThemeSwitcher />
