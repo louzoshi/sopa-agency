@@ -24,6 +24,7 @@ import CTA from "@/components/CTA";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Analytics from "@/components/Analytics";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { feed } from "@/data/feed";
 import { feedPosts } from "@/data/feed";
@@ -175,6 +176,7 @@ export default function LayoutClient({
         </div>
       </div>
 
+      <Analytics section={section} />
       <Header locale={locale} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} onNavigate={navigate} />
 
       {/* Hero content overlay — only on home, over orb */}
