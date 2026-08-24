@@ -74,7 +74,7 @@ export const workItems: WorkItem[] = [
     title: "DAO Central",
     subtitle: "Gnars DAO",
     role: "Development",
-    thumb: "/assets/images/work/w3.jpg",
+    thumb: "/assets/images/work/gnars.png",
     tags: "dao, web3, governance",
     category: "production",
   },
