@@ -699,8 +699,10 @@ export default function ScrollShowcase() {
       textEls.forEach((el, i) => {
         if (!el) return;
         const d = Math.abs(sectionAtCamera - i);
-        // steep falloff: fully gone by ~1/3 section away, so neighbors never co-read
-        const opacity = Math.max(0, 1 - d * 3);
+        // steep falloff: fully gone by ~1/3 section away, so neighbors never co-read.
+        // last section also fades out near the very end so the CTA below doesn't collide.
+        let opacity = Math.max(0, 1 - d * 3);
+        if (i === SECTIONS.length - 1 && p > 0.92) opacity *= Math.max(0, 1 - (p - 0.92) / 0.08);
         el.style.opacity = opacity.toString();
       });
     }
