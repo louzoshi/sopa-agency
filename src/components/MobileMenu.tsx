@@ -5,14 +5,14 @@ interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   locale: string;
-  onNavigate: (section: 'home' | 'work' | 'team' | 'portfolio' | 'solutions' | 'about' | 'contact') => void;
+  onNavigate: (section: 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact') => void;
 }
 
 const LINKS = [
   { id: 'home', en: 'Home', pt: 'Início' },
   { id: 'work', en: 'Work', pt: 'Trabalho' },
   { id: 'team', en: 'Team', pt: 'Equipe' },
-  { id: 'portfolio', en: 'Portfolio', pt: 'Portfólio' },
+  { id: 'feed', en: 'Feed', pt: 'Feed' },
   { id: 'solutions', en: 'Solutions', pt: 'Soluções' },
   { id: 'about', en: 'About', pt: 'Sobre' },
   { id: 'contact', en: 'Contact', pt: 'Contato' },

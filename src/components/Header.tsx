@@ -5,7 +5,7 @@ interface HeaderProps {
   locale: string;
   isMenuOpen: boolean;
   setIsMenuOpen: (open: boolean) => void;
-  onNavigate: (section: 'home' | 'work' | 'team' | 'portfolio' | 'solutions' | 'about' | 'contact') => void;
+  onNavigate: (section: 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact') => void;
 }
 
 export default function Header({ setIsMenuOpen, onNavigate }: HeaderProps) {
@@ -20,7 +20,7 @@ export default function Header({ setIsMenuOpen, onNavigate }: HeaderProps) {
         <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('home'); }}>home</a>
         <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('work'); }}>work</a>
         <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('team'); }}>team</a>
-        <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('portfolio'); }}>portfolio</a>
+        <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('feed'); }}>feed</a>
         <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('solutions'); }}>solutions</a>
         <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('about'); }}>about</a>
         <a href="#" className="hover:text-gray-300 transition-colors" onClick={e => { e.preventDefault(); onNavigate('contact'); }}>contact</a>

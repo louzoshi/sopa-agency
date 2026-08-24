@@ -22,9 +22,9 @@ import Solutions from "@/components/Solutions";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { portfolio } from "@/data/portfolio";
+import { feed } from "@/data/feed";
 
-type Section = 'home' | 'work' | 'team' | 'portfolio' | 'solutions' | 'about' | 'contact';
+type Section = 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact';
 
 // ponytail: solutions/contact have no data files yet — inline until they earn one
 const EXTRA = {
@@ -226,9 +226,9 @@ export default function LayoutClient({
             </div>
           )}
           {section === 'team' && <Team title={team[l]?.title} subtitle={team[l]?.subtitle} locale={locale} />}
-          {section === 'portfolio' && (
+          {section === 'feed' && (
             <div className="max-w-7xl mx-auto px-6 py-16">
-              <h2 className="text-3xl font-bold mb-2 page-title-anim">{portfolio[l]?.title}</h2>
+              <h2 className="text-3xl font-bold mb-2 page-title-anim">{feed[l]?.title}</h2>
               <p className="mt-4 opacity-50 page-anim page-anim-d1">Coming soon.</p>
             </div>
           )}
