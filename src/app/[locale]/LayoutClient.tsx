@@ -4,6 +4,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileMenu from "@/components/MobileMenu";
@@ -48,7 +49,11 @@ export default function LayoutClient({
   locale: string;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [section, setSection] = useState<Section>('home');
+  // section derives from the URL: /en/contact → 'contact'. Shareable links work.
+  const pathname = usePathname();
+  const VALID_SECTIONS = ['home', 'work', 'team', 'feed', 'solutions', 'about', 'contact'];
+  const pathSection = (VALID_SECTIONS.find(s => pathname.startsWith(`/${locale}/${s}`)) ?? 'home') as Section;
+  const [section, setSection] = useState<Section>(pathSection);
   const [reelUrl, setReelUrl] = useState<string | null>(null);
   const [detailItem, setDetailItem] = useState<WorkItem | null>(null);
   const [progress, setProgress] = useState(0);
@@ -113,6 +118,9 @@ export default function LayoutClient({
     withWipe(() => {
       window.scrollTo({ top: 0 });
       setSection(s);
+      // keep URL in sync so section links are shareable
+      const url = s === 'home' ? `/${locale}` : `/${locale}/${s}`;
+      window.history.pushState(null, '', url);
     });
   };
 
@@ -123,6 +131,17 @@ export default function LayoutClient({
     return () => window.removeEventListener('sopa:navigate', h);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [section]);
+
+  // browser back/forward: section follows the URL
+  useEffect(() => {
+    const onPop = () => {
+      const s = (VALID_SECTIONS.find(x => window.location.pathname.startsWith(`/${locale}/${x}`)) ?? 'home') as Section;
+      setSection(s);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale]);
 
   const list = work[l]?.list ?? [];
 
