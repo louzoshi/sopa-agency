@@ -147,7 +147,7 @@ export default function LayoutClient({
           style={{ opacity: 1 - scrollP }}
         >
           <div className="page-anim font-futura pointer-events-auto max-w-5xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[11px] font-mono uppercase tracking-widest text-white/70 backdrop-blur-sm">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-xl border border-amber-300/30 bg-amber-300/10 px-4 py-2 font-mono text-xs text-amber-200 backdrop-blur-sm">
               <span>Web</span>
               <span className="opacity-40">·</span>
               <span>AI</span>
@@ -191,9 +191,9 @@ export default function LayoutClient({
                     role="tab"
                     aria-selected={workFilter === cat}
                     onClick={() => setWorkFilter(cat)}
-                    className={`px-4 py-1.5 text-sm font-medium rounded-full border transition-colors ${
+                    className={`px-4 py-1.5 text-sm font-medium rounded-xl border transition-colors ${
                       workFilter === cat
-                        ? 'border-white bg-white/10 text-white'
+                        ? 'border-amber-300/30 bg-amber-300/10 text-amber-200'
                         : 'border-white/20 text-white/70 hover:border-white/40 hover:text-white'
                     }`}
                   >
