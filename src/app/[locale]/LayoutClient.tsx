@@ -23,6 +23,7 @@ import CTA from "@/components/CTA";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { feed } from "@/data/feed";
 
 type Section = 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact';
@@ -277,6 +278,7 @@ export default function LayoutClient({
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
       <ThemeSwitcher />
+      <LocaleSwitcher />
     </>
   );
 }

@@ -8,7 +8,7 @@ import { site } from '@/data/site';
 const COPY = {
   en: {
     title: 'Ready to start?',
-    subtitle: "Let's talk about your project. First conversation is free.",
+    subtitle: "Let's talk about your project.",
     button: 'BOOK DISCOVERY CALL',
   },
   pt: {

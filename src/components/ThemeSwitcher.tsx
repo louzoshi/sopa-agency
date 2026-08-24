@@ -47,7 +47,7 @@ export default function ThemeSwitcher() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-[104px] z-50">
       {isOpen && (
         <div className="mb-2 p-2 rounded-xl border border-white/20 bg-black/90 backdrop-blur-xl shadow-2xl flex flex-col gap-1 min-w-[200px] page-anim">
           <div className="px-3 py-1 text-[11px] font-mono uppercase tracking-wider text-white/50 border-b border-white/10 mb-1">

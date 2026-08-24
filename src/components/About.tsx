@@ -8,7 +8,7 @@ export default function About({ locale }: { locale: string }) {
     <section className="max-w-7xl mx-auto px-6 py-16 space-y-24">
       {/* Hero / Intro */}
       <div className="page-anim space-y-6">
-        <div className="font-mono text-xs text-amber-300 uppercase tracking-widest">{t.hero.badge}</div>
+        {/* <div className="font-mono text-xs text-amber-300 uppercase tracking-widest">{t.hero.badge}</div> */}
         <h2 className="text-3xl sm:text-4xl font-bold page-title-anim">{t.hero.title}</h2>
         <p className="max-w-3xl text-xl font-medium text-white/90 leading-relaxed page-title-anim page-title-anim-d1">{t.hero.tagline}</p>
         <p className="max-w-3xl text-base opacity-75 leading-relaxed">{t.hero.body}</p>
@@ -117,7 +117,7 @@ export default function About({ locale }: { locale: string }) {
 
 const en = {
   hero: {
-    badge: '◢◤ SOPA',
+    // badge: '◢◤ SOPA',
     title: 'Culture that ships',
     tagline: 'A creative + engineering studio that breaks the barrier between the old internet and the new one — brands, culture, AI agents, and onchain, built to actually ship.',
     body: 'We work both worlds: the legacy brand that needs reach, and the protocol that needs a soul. We turn culture into product — campaigns across every channel, autonomous AI agents that run them.',
@@ -227,7 +227,7 @@ const en = {
 
 const pt = {
   hero: {
-    badge: '◢◤ SOPA',
+    // badge: '◢◤ SOPA',
     title: 'Cultura que entrega',
     tagline: 'Um estúdio criativo e de engenharia que quebra a barreira entre a velha internet e a nova — marcas, cultura, agentes de IA e onchain, feitos para realmente entregar.',
     body: 'Trabalhamos os dois mundos: a marca tradicional que precisa de alcance e o protocolo que precisa de alma. Transformamos cultura em produto — campanhas em todos os canais e agentes autônomos de IA que as operam.',
