@@ -93,7 +93,7 @@ export default function LayoutClient({
     function maybeReveal() {
       if (ready && minDone) setProgress(1);
     }
-    const t = setTimeout(() => { minDone = true; maybeReveal(); }, 1200);
+    const t = setTimeout(() => { minDone = true; maybeReveal(); }, 2500);
     (window as unknown as { __orbFirstFrame?: () => void }).__orbFirstFrame = () => { ready = true; maybeReveal(); };
     return () => clearTimeout(t);
   }, []);

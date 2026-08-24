@@ -110,6 +110,14 @@ export const workItems: WorkItem[] = [
     tags: "gamedev, webgl, threejs",
     category: "production",
   },
+  {
+    title: "Swap",
+    subtitle: "Swaps.pro",
+    role: "Multichain Swap",
+    thumb: "/assets/images/work/swap.pro.png",
+    tags: "blockchain, defi, web3",
+    category: "production",
+  },
 ];
 
 export const work = {
