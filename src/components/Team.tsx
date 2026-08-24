@@ -1,7 +1,8 @@
 // src/components/Team.tsx
 'use client';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { members, skillLabels, type Member } from '@/data/team';
+import MemberPanel from '@/components/MemberPanel';
 
 function Bars({ member, locale }: { member: Member; locale: string }) {
   if (!member.skills?.length) return null;
@@ -22,7 +23,7 @@ function Bars({ member, locale }: { member: Member; locale: string }) {
   );
 }
 
-function Card({ member, locale, delay }: { member: Member; locale: string; delay: number }) {
+function Card({ member, locale, delay, onOpen }: { member: Member; locale: string; delay: number; onOpen: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
 
   // CSS 3D tilt on hover — the WebGL stars behind provide the depth
@@ -45,6 +46,11 @@ function Card({ member, locale, delay }: { member: Member; locale: string; delay
       style={{ transitionDelay: `${delay}ms` }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
+      onClick={onOpen}
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onOpen(); }}
+      title={locale === 'pt' ? 'verificar atividade' : 'verify activity'}
     >
       {/* ID layout: photo left, handle + skills right */}
       <div className="flex items-center gap-4">
@@ -99,15 +105,18 @@ function Card({ member, locale, delay }: { member: Member; locale: string; delay
 }
 
 export default function Team({ title, subtitle, locale }: { title?: string; subtitle?: string; locale: string }) {
+  const [selected, setSelected] = useState<Member | null>(null);
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <h2 className="text-3xl font-bold mb-2 page-title-anim">{title}</h2>
       {subtitle && <p className="mb-10 opacity-70 page-title-anim page-title-anim-d1">{subtitle}</p>}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 page-anim page-anim-d2" style={{ perspective: '1000px' }}>
         {members.map((m, i) => (
-          <Card key={m.handle} member={m} locale={locale} delay={Math.min(i * 22, 300)} />
+          <Card key={m.handle} member={m} locale={locale} delay={Math.min(i * 22, 300)} onOpen={() => setSelected(m)} />
         ))}
       </div>
+
+      <MemberPanel member={selected} locale={locale} onClose={() => setSelected(null)} />
 
       {/* join-the-collective CTA */}
       <div className="mt-12 text-center page-anim">
