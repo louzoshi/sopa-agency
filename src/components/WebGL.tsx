@@ -97,15 +97,12 @@ float Map(vec3 p, float scale) {
 
 vec3 GetColor(vec3 p) {
     float amount = clamp((1.5 - length(p)) / 2.0, 0.0, 1.0);
-    // SOPA Yellow
-    vec3 amber = vec3(1.0, 0.8, 0.0);
-    // Changing colors over time
-    vec3 hue = 0.5 + 0.5 * cos(6.28319 * (iTime * 0.1 + vec3(0.0, 0.33, 0.67)));
-    // amount is ~0.25 at the outer rim and ~0.75 at the center
-    // smoothstep(0.26, 0.4) makes the yellow rim very thin (just on the surface)
-    // and lets the core changing colors bleed out much closer to the edge
+    // pale champagne-gold rim (de-saturated from heavy amber)
+    vec3 paleGold = vec3(0.95, 0.90, 0.78);
+    // slow silver-champagne iridescence
+    vec3 silverHue = 0.6 + 0.4 * cos(6.28319 * (iTime * 0.08 + vec3(0.0, 0.33, 0.67)));
     float mixFactor = smoothstep(0.26, 0.4, amount);
-    return mix(amber, hue, mixFactor) * amount * (orbOpacity);
+    return mix(paleGold, silverHue, mixFactor) * amount * (orbOpacity);
 }
 
 void main() {
@@ -121,7 +118,7 @@ void main() {
   float rz = flow(p) ;
   p /= exp(mod(2.1,2.1));
   rz *= (3.2-spiral(p,.5))*.7 * audio1 ; // intensity / thickness of ring
-  vec3 col = vec3(0.1, 0.08, 0.0) / rz; // SOPA pure yellow/amber glow
+  vec3 col = vec3(0.035, 0.035, 0.04) / rz; // ethereal silver-champagne glow (was heavy yellow)
   col=pow(abs(col),vec3(1.01)) - (abs((iMouse.x ))*.00005);
   outColor+= vec4(col,1.0);
 

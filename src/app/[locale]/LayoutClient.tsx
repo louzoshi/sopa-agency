@@ -146,22 +146,24 @@ export default function LayoutClient({
           className="fixed inset-0 z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 pointer-events-none transition-opacity duration-700"
           style={{ opacity: 1 - scrollP }}
         >
-          <div className="page-anim font-futura pointer-events-auto max-w-3xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-mono text-amber-300 backdrop-blur-sm">
+          <div className="page-anim font-futura pointer-events-auto max-w-5xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[11px] font-mono uppercase tracking-widest text-white/70 backdrop-blur-sm">
               <span>Web</span>
               <span className="opacity-40">·</span>
               <span>AI</span>
               <span className="opacity-40">·</span>
               <span>Base</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-3 tracking-tight">{t.title}</h1>
-            <p className="text-xl md:text-2xl font-semibold text-amber-300/95 mb-4 tracking-tight">
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white leading-[0.9] mb-6">
+              {t.title}
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-white/95 mb-4 tracking-tight">
               {t.tagline}
             </p>
-            <p className="text-sm md:text-base text-white/80 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
               {t.description}
             </p>
-            <span className="mt-10 inline-block text-xs opacity-40 animate-pulse pointer-events-auto">scroll ↓</span>
+            <span className="mt-12 inline-block text-xs opacity-40 animate-pulse pointer-events-auto">↓</span>
           </div>
         </div>
       )}
