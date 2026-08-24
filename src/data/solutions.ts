@@ -2,6 +2,7 @@
 export type Solution = {
   num: string;
   icon: string;
+  image?: string; // square-cropped visual; falls back to emoji icon when absent
   title: string;
   tags?: string[];
   body: { en: string; pt: string };
@@ -11,6 +12,7 @@ export const solutions: Solution[] = [
   {
     num: "01",
     icon: "🤖",
+    image: "/assets/images/solutions/agents.jpeg",
     title: "AI Agents & Automation",
     tags: ["autonomous agents", "transcoding", "ops automation", "agentic marketing"],
     body: {
@@ -21,6 +23,7 @@ export const solutions: Solution[] = [
   {
     num: "02",
     icon: "🎯",
+    image: "/assets/images/solutions/camp-eng.jpeg",
     title: "Campaign Engineering",
     tags: ["Farcaster", "X / Twitter", "Hive", "Discord", "Instagram", "email"],
     body: {
@@ -31,6 +34,7 @@ export const solutions: Solution[] = [
   {
     num: "03",
     icon: "🛠️",
+    image: "/assets/images/solutions/portals-tooling.jpeg",
     title: "Portals & Tooling",
     tags: ["dashboards", "content studio", "analytics", "treasury", "payroll"],
     body: {
@@ -41,6 +45,7 @@ export const solutions: Solution[] = [
   {
     num: "04",
     icon: "⛓️",
+    image: "/assets/images/solutions/Onchain-Revenue.jpeg",
     title: "Onchain Revenue & Treasury",
     tags: ["0xSplits", "Superfluid payroll", "swappers", "staking pipelines"],
     body: {

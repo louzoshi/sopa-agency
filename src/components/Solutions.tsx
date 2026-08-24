@@ -53,8 +53,12 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
         >
           <div className="grid gap-6 rounded-2xl border border-white/15 bg-black/80 p-8 backdrop-blur-md md:grid-cols-12 md:p-12 mb-6 hover:border-amber-300/40 transition-colors">
             <div className="md:col-span-2 flex md:flex-col items-center md:items-start justify-between">
-              <div className="font-mono text-2xl font-bold text-amber-300">{s.num}</div>
-              <div className="text-3xl mt-2">{s.icon}</div>
+              {s.image ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={s.image} alt="" loading="lazy" className="w-16 h-16 rounded-xl object-cover border border-white/15" />
+              ) : (
+                <div className="text-3xl mt-2">{s.icon}</div>
+              )}
             </div>
             <div className="md:col-span-10 space-y-4">
               <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">{s.title}</h3>
