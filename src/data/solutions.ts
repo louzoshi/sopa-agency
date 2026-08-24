@@ -56,6 +56,7 @@ export const solutions: Solution[] = [
   {
     num: "05",
     icon: "🎬",
+    image: "/assets/images/solutions/culture.jpeg",
     title: "Content & Culture",
     tags: ["Skate", "BMX", "Surf", "DAO communities", "mainstream to onchain"],
     body: {

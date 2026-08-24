@@ -58,12 +58,12 @@ export default function About({ locale }: { locale: string }) {
       </div>
 
       {/* The Stack (Marquee) */}
-      <div className="page-anim page-anim-d1 space-y-6 overflow-hidden relative">
+      <div className="page-anim page-anim-d1 space-y-6">
         <h3 className="text-2xl font-semibold">{t.stack.title}</h3>
-        {/* Edge fade gradients */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-        
+        <div className="overflow-hidden relative">
+          {/* Edge fade gradients — only over the marquee, not the title */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
         <div className="flex w-max animate-marquee space-x-3 pt-2 pb-2">
           {/* Double the list for seamless infinite looping */}
           {[...t.stack.items, ...t.stack.items, ...t.stack.items].map((tech, i) => (
@@ -74,6 +74,7 @@ export default function About({ locale }: { locale: string }) {
               {tech}
             </span>
           ))}
+        </div>
         </div>
       </div>
 
