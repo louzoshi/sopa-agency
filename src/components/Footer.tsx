@@ -41,7 +41,7 @@ export default function Footer({ locale }: { locale: string }) {
         </p>
 
         <p className="text-center text-xs text-white/40">
-          © {new Date().getFullYear()} SOPA AGENCY — Culture that ships
+          sopa © {new Date().getFullYear()} · {locale === 'pt' ? 'rede de criadores · feito coletivamente' : 'creator network · made collectively'}
         </p>
       </div>
     </footer>
