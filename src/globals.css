@@ -164,11 +164,10 @@ body {
   transform: scale(1.05);
 }
 
-/* Loader overlay: hold black 2s, fade out 1s (pure CSS — no JS timers) */
+/* Loader overlay: quick fade out (pure CSS — no JS timers) */
 @keyframes loader-fade {
-  0% { opacity: 1; }
-  66.7% { opacity: 1; }
-  100% { opacity: 0; }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 /* Process (How It Works): phases light up on scroll; diagrams stagger in.
