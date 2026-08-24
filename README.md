@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SOPA Agency — Website
 
-## Getting Started
+Single-page marketing site for SOPA Agency: a creative + engineering studio bridging the old internet and the new one. Built with Next.js (App Router), a persistent WebGL orb background, and a 3D scroll-driven showcase. Bilingual (en / pt-BR).
 
-First, run the development server:
+## Architecture
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The whole site is a **single page** — the main menu swaps sections client-side, no full reloads:
+
+```
+src/
+├── app/
+│   ├── [locale]/            # /en and /pt routes
+│   │   ├── layout.tsx       # fonts, metadata per locale
+│   │   ├── page.tsx         # renders LayoutClient
+│   │   └── LayoutClient.tsx # section state machine + global overlays
+│   ├── api/contact/route.ts # contact form → LLM scope helper
+│   └── page.tsx             # / redirects to /en
+├── components/              # one component per section + shared overlays
+│   ├── WebGL.tsx            # persistent amber orb background (GLSL shader)
+│   ├── ScrollShowcase.tsx   # 3D scroll journey on home (three.js)
+│   └── ...
+├── data/                    # content layer — ALL copy lives here, typed
+│   ├── site.ts              # menu, footer menu, socials (per locale)
+│   ├── work.ts              # work items, categories (single source of truth for filters)
+│   ├── solutions.ts, process.ts, team.ts, feed.ts, about (inline in About.tsx)...
+│   └── i18n.ts              # UI strings
+└── globals.css              # animation keyframes, font themes
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Key patterns:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Content as modules**: no CMS/database. Every section reads from a typed data file in `src/data/`. All content is keyed by locale (`en` / `pt`) — never add a locale entry to only one language.
+- **Section switching**: `LayoutClient` holds `section` state; transitions use a letterbox wipe (`TransitionOverlay` + `withWipe()`).
+- **Persistent WebGL**: the orb background stays mounted across sections; opacity varies per section.
+- **Scroll-driven 3D**: home uses a fixed viewport with camera flying through stacked 3D scenes as the user scrolls (`ScrollShowcase`).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) for step-by-step patterns and [DESIGN-PATTERN.md](./DESIGN-PATTERN.md) for UI/animation standards.
 
-## Learn More
+## Stack
 
-To learn more about Next.js, take a look at the following resources:
+| Package | Role |
+|---|---|
+| Next.js 16 | App Router, SSR/SSG |
+| React 19 | UI |
+| three | WebGL orb background + scroll showcase |
+| Tailwind CSS v4 | styling |
+| TypeScript | types everywhere |
+| ESLint (eslint-config-next) | linting |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Package manager: **pnpm**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Run Locally
 
-## Deploy on Vercel
+```bash
+pnpm install
+pnpm dev        # http://localhost:3000 (redirects to /en)
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Optional — contact form LLM (`.env.local`):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+PIONEERS_API_KEY=...     # key from alpha.pioneers.dev/keys (funded)
+PIONEERS_BASE_URL=https://alpha.pioneers.dev/api/v1
+PIONEERS_MODEL=...
+```
+
+Without these, everything works except the AI follow-up in the contact form.
+
+## Build & Lint
+
+```bash
+pnpm build      # production build
+pnpm start      # serve the production build
+pnpm lint       # eslint
+```
