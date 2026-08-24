@@ -14,8 +14,7 @@ import WorkDetail from "@/components/WorkDetail";
 import Loader from "@/components/Loader";
 import ScrollShowcase from "@/components/ScrollShowcase";
 import { site } from "@/data/site";
-import { work } from "@/data/work";
-import type { WorkItem } from "@/data/work";
+import { workItems, work, workCategories, type WorkItem, type WorkCategory } from "@/data/work";
 import { team } from "@/data/team";
 import Team from "@/components/Team";
 import Solutions from "@/components/Solutions";
@@ -50,7 +49,7 @@ export default function LayoutClient({
   const [reelUrl, setReelUrl] = useState<string | null>(null);
   const [detailItem, setDetailItem] = useState<WorkItem | null>(null);
   const [progress, setProgress] = useState(0);
-  const [workFilter, setWorkFilter] = useState<'all' | 'events' | 'marketing' | 'production' | 'branding'>('all');
+  const [workFilter, setWorkFilter] = useState<'all' | WorkCategory>('all');
   // globe/video layer: home hero opens up (orb unfolds) as you scroll into the presentation
   const [scrollP, setScrollP] = useState(0); // 0 top of hero .. 1 fully into presentation
   // menu sections: orb opens on entry and STAYS open while on that section
@@ -192,7 +191,7 @@ export default function LayoutClient({
               <p className="mb-6 opacity-70 page-title-anim page-title-anim-d1">{work[l]?.subtitle}</p>
               {/* filter tabs */}
               <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Work categories">
-                {(['all', 'events', 'marketing', 'production', 'branding'] as const).map(cat => (
+                {(['all', ...workCategories] as const).map(cat => (
                   <button
                     key={cat}
                     role="tab"

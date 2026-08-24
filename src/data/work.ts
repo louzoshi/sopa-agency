@@ -5,6 +5,7 @@ export interface WorkItem {
   role: string;
   thumb: string;
   tags: string;
+  // single source of truth for work categories — filters derive from this
   category: 'events' | 'marketing' | 'production' | 'branding' | 'blockchain' | 'web3' | 'gamedev' | 'ai';
   // optional fullscreen video shown when the tile is clicked
   video?: string;
@@ -127,6 +128,10 @@ export const workItems: WorkItem[] = [
     category: "blockchain",
   },
 ];
+
+export type WorkCategory = WorkItem['category'];
+// filter tabs: 'all' + every category that actually appears in workItems
+export const workCategories: WorkCategory[] = [...new Set(workItems.map(w => w.category))];
 
 export const work = {
   en: {
