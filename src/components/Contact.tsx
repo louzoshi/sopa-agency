@@ -95,11 +95,13 @@ export default function Contact({ title, locale }: { title?: string; locale: str
     name,
     email,
     message,
+    locale,
     types: [...types].join(', '),
     budget,
     deadline,
     turn,
-    history: chat.slice(0, -1),
+    // server already re-sends the brief as its own user turn — don't duplicate it in history
+    history: chat.slice(1),
   });
 
   async function callBot(message: string) {
@@ -121,11 +123,18 @@ export default function Contact({ title, locale }: { title?: string; locale: str
     }
   }
 
+  // "talk to our agent" — starts the chat without sending a brief
+  async function startChat() {
+    const text = locale === 'pt' ? 'oi, quero conversar com o agente' : 'hi, I want to talk to the agent';
+    setChat([{ role: 'user', content: text }]);
+    await callBot(text);
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!msg.trim()) return;
-    setChat([{ role: 'user', content: msg }]);
-    await callBot(msg);
+    const text = msg.trim() || (locale === 'pt' ? 'quero conversar sobre um projeto' : 'I want to talk about a project');
+    setChat([{ role: 'user', content: text }]);
+    await callBot(text);
   }
 
   async function sendFollowUp(e: React.FormEvent) {
@@ -140,7 +149,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...briefPayload(followUp), message: chat[0]?.content ?? followUp, history: next.slice(0, -1), turn }),
+        body: JSON.stringify({ ...briefPayload(followUp), message: followUp, history: next.slice(1, -1), turn }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error ?? 'erro');
@@ -301,7 +310,9 @@ export default function Contact({ title, locale }: { title?: string; locale: str
             {llm && (
             <button
               type="button"
-              className="rounded-lg border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
+              onClick={startChat}
+              disabled={status !== 'idle'}
+              className="rounded-lg border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white disabled:opacity-60"
             >
               {locale === 'pt' ? 'falar com nosso agente' : 'talk to our agent'}
             </button>

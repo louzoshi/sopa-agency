@@ -8,12 +8,13 @@ export const runtime = 'nodejs';
 
 const MAX_TURNS = 3;
 
-const SYSTEM = `You are SOPA Agency's intake agent. You receive a project brief in Portuguese or English.
+const SYSTEM = (locale: string) => `You are SOPA Agency's intake agent. You receive a project brief.
 Your job: extract project details. Ask ONE smart question per reply to fill gaps (audience, scope, references, goals).
-Reply in the same language as the brief, max 80 words, warm and direct tone. Sign as "— SOPA (bot de plantão)".
+ALWAYS reply in ${locale === 'pt' ? 'Portuguese (pt-BR)' : 'English'} — never switch languages mid-conversation, regardless of what language the user writes in.
+Max 80 words, warm and direct tone. Sign as "— SOPA (bot de plantão)".
 Turn counter: the client tells you "turn N of ${MAX_TURNS}".
 - If N < ${MAX_TURNS}: ask your question.
-- If N >= ${MAX_TURNS} (or you have enough details): do NOT ask anything. Wrap up with a summary of what you captured and close with "Beleza, temos tudo — a gente entra em contato em breve. 🤙"`;
+- If N >= ${MAX_TURNS} (or you have enough details): do NOT ask anything. Wrap up with a summary of what you captured and close with "${locale === 'pt' ? 'Beleza, temos tudo — a gente entra em contato em breve. 🤙' : 'Got everything — we\'ll be in touch soon. 🤙'}"`;
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>;
@@ -38,6 +39,7 @@ export async function POST(req: Request) {
         content: String(m.content ?? '').slice(0, 4000),
       })).filter((m: { content: string }) => m.content)
     : [];
+  const locale = body.locale === 'pt' ? 'pt' : 'en';
   const turn = Math.min(Number(body.turn) || 1, MAX_TURNS);
 
   const summary = [
@@ -65,10 +67,9 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: process.env.PIONEERS_MODEL ?? 'auto',
         messages: [
-          { role: 'system', content: SYSTEM },
+          { role: 'system', content: SYSTEM(locale) },
           { role: 'user', content: `${summary}\n\n(turn ${turn} of ${MAX_TURNS})` },
           ...history,
-          ...(message && history.length ? [] : []),
         ],
         max_tokens: 1000, // ponytail: local Qwen burns tokens on reasoning first; raise if a reasoning-heavy model lands here
       }),
