@@ -33,6 +33,7 @@ export default function ThemeSwitcher() {
 
   useEffect(() => {
     const saved = localStorage.getItem('sopa-font-theme') as FontTheme | null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- must apply after mount to avoid hydration mismatch
     if (saved && ['next-gen', 'cyber', 'avant-garde'].includes(saved)) setCurrentTheme(saved);
   }, []);
 
