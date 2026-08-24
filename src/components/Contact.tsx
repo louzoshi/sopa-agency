@@ -199,6 +199,15 @@ export default function Contact({ title, locale }: { title?: string; locale: str
           <span>Farcaster /gnars</span>
         </a>
         <a
+          href="https://www.instagram.com/sopa_agency/"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 rounded-xl border border-white/15 bg-black/40 px-3.5 py-2 text-white/80 hover:border-amber-300 hover:text-amber-300 transition-colors"
+        >
+          <span>📸</span>
+          <span>@sopa_agency</span>
+        </a>
+        <a
           href="https://sopa.team"
           target="_blank"
           rel="noreferrer"
