@@ -117,10 +117,13 @@ export default function Team({ title, subtitle, locale }: { title?: string; subt
         <p className="mt-3 text-sm text-white/70">
           {locale === 'pt' ? 'Faz parte da agência SOPA?' : 'Part of the SOPA agency?'}
         </p>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- SPA section nav, not a page link */}
         <a
+          role="button"
+          tabIndex={0}
           href="/contact"
           onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent('sopa:navigate', { detail: 'contact' })); }}
-          className="mt-2 inline-block font-mono text-sm text-amber-300 hover:text-amber-200 transition-colors"
+          className="mt-2 inline-block font-mono text-sm text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
         >
           {locale === 'pt' ? 'candidatar perfil →' : 'apply with your profile →'}
         </a>
