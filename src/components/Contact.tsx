@@ -2,9 +2,28 @@
 // sopa.team/contato port: terminal-styled brief form + short LLM follow-up chat.
 import { useRef, useState } from 'react';
 
-const TYPES = ["presença digital", "site / landing", "identidade", "campanha", "comunidade", "produto digital"];
-const BUDGETS = ["até 5k", "5–15k", "15–40k", "40k+", "a definir"];
-const DEADLINES = ["sem pressa", "1 mês", "este trimestre", "ontem"];
+// pill options are [en, pt] pairs — same value submitted either way
+const TYPES = [
+  { en: 'digital presence', pt: 'presença digital' },
+  { en: 'site / landing', pt: 'site / landing' },
+  { en: 'identity', pt: 'identidade' },
+  { en: 'campaign', pt: 'campanha' },
+  { en: 'community', pt: 'comunidade' },
+  { en: 'digital product', pt: 'produto digital' },
+];
+const BUDGETS = [
+  { en: 'under 5k', pt: 'até 5k' },
+  { en: '5–15k', pt: '5–15k' },
+  { en: '15–40k', pt: '15–40k' },
+  { en: '40k+', pt: '40k+' },
+  { en: 'TBD', pt: 'a definir' },
+];
+const DEADLINES = [
+  { en: 'no rush', pt: 'sem pressa' },
+  { en: '1 month', pt: '1 mês' },
+  { en: 'this quarter', pt: 'este trimestre' },
+  { en: 'yesterday', pt: 'ontem' },
+];
 const MAX_TURNS = 3;
 
 type Turn = { role: 'user' | 'assistant'; content: string };
@@ -203,7 +222,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
           <div className="mb-2 text-[11px] text-white/40">{L.whatIs}</div>
           <div className="flex flex-wrap gap-2">
             {TYPES.map((t) => (
-              <Pill key={t} label={t} on={types.has(t)} onClick={() => toggleType(t)} />
+              <Pill key={t.pt} label={t[locale as 'en' | 'pt']} on={types.has(t.pt)} onClick={() => toggleType(t.pt)} />
             ))}
           </div>
         </div>
@@ -213,7 +232,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
             <div className="mb-2 text-[11px] text-white/40">{L.budget}</div>
             <div className="flex flex-wrap gap-2">
               {BUDGETS.map((b) => (
-                <Pill key={b} label={b} on={budget === b} onClick={() => setBudget(budget === b ? null : b)} />
+                <Pill key={b.pt} label={b[locale as 'en' | 'pt']} on={budget === b.pt} onClick={() => setBudget(budget === b.pt ? null : b.pt)} />
               ))}
             </div>
           </div>
@@ -221,7 +240,7 @@ export default function Contact({ title, locale }: { title?: string; locale: str
             <div className="mb-2 text-[11px] text-white/40">{L.deadline}</div>
             <div className="flex flex-wrap gap-2">
               {DEADLINES.map((d) => (
-                <Pill key={d} label={d} on={deadline === d} onClick={() => setDeadline(deadline === d ? null : d)} />
+                <Pill key={d.pt} label={d[locale as 'en' | 'pt']} on={deadline === d.pt} onClick={() => setDeadline(deadline === d.pt ? null : d.pt)} />
               ))}
             </div>
           </div>
