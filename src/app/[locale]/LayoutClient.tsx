@@ -26,6 +26,7 @@ import Contact from "@/components/Contact";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Analytics from "@/components/Analytics";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import HumanMachineSwitcher from "@/components/HumanMachineSwitcher";
 import { feed } from "@/data/feed";
 import { feedPosts } from "@/data/feed";
 
@@ -387,8 +388,13 @@ export default function LayoutClient({
       <TransitionOverlay hidden={!isHome} />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
-      <ThemeSwitcher />
-      <LocaleSwitcher />
+      <HumanMachineSwitcher locale={locale} />
+      {/* grouped bottom-right switchers: [HUMAN|MACHINE] [Aa theme] [EN|PT] */}
+      <div className="fixed bottom-4 right-4 z-[60] flex items-center gap-2">
+        <HumanMachineSwitcher locale={locale} />
+        <ThemeSwitcher />
+        <LocaleSwitcher />
+      </div>
     </>
   );
 }

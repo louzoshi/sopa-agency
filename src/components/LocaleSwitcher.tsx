@@ -21,7 +21,7 @@ export default function LocaleSwitcher() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex gap-2">
+    <div className="relative flex gap-2">
       <div className="flex rounded-full border border-white/20 bg-black/80 backdrop-blur-md overflow-hidden shadow-lg">
         {LOCALES.map(l => (
           <button
