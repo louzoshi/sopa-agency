@@ -388,7 +388,6 @@ export default function LayoutClient({
       <TransitionOverlay hidden={!isHome} />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
-      <HumanMachineSwitcher locale={locale} />
       {/* grouped bottom-right switchers: [HUMAN|MACHINE] [Aa theme] [EN|PT] */}
       <div className="fixed bottom-4 right-4 z-[60] flex items-center gap-2">
         <HumanMachineSwitcher locale={locale} />
