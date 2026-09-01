@@ -3,8 +3,9 @@
 // Humans → GitHub public events (commits/PRs). AI agents → Hive posts by handle.
 'use client';
 import { useEffect, useState } from 'react';
-import { members, skillLabels, type Member } from '@/data/team';
+import { members, type Member } from '@/data/team';
 import SocialLinks from '@/components/SocialLinks';
+import Disciplines from '@/components/Disciplines';
 
 type Proof =
   | { kind: 'gh'; repo: string; text: string; date: string; url: string }
@@ -109,18 +110,9 @@ export default function MemberPanel({ member, locale, onClose }: { member: Membe
         {member.skills?.length ? (
           <div className="mb-6">
             <div className="mb-2 font-mono text-[10px] uppercase tracking-widest text-white/40">
-              {locale === 'pt' ? 'skills' : 'skills'}
+              {locale === 'pt' ? 'disciplinas' : 'disciplines'}
             </div>
-            <div className="space-y-1.5 font-mono text-xs text-white/50">
-              {member.skills.map(([key, val]) => (
-                <div key={key}>
-                  <div className="flex justify-between">
-                    <span>{skillLabels[key]?.[locale as 'en' | 'pt'] ?? key}</span><span>{val}</span>
-                  </div>
-                  <div className="h-1 w-full bg-white/10"><div className="h-full bg-amber-300" style={{ width: `${val}%` }} /></div>
-                </div>
-              ))}
-            </div>
+            <Disciplines items={member.skills} locale={locale} size="md" />
           </div>
         ) : null}
 
