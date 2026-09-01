@@ -29,10 +29,13 @@ The background consists of a shared WebGL canvas (`WebGL.tsx`) featuring the gol
    - `portfolio`: `0.4`
    - `services`: `0.5`
    - `contact`: `0.3`
-3. **Orb Color Scheme**:
-   - Outer shell & rim: **SOPA Yellow** (`#FFE000` / `#FFD54F`)
-   - Inner core: Dynamic cycling chromatic shader
-   - Glow: Warm ambient yellow `vec3(0.1, 0.08, 0.0)`
+3. **Orb Color Scheme** — driven by the font theme (`THEME_TINT` in `src/lib/fontTheme.ts`),
+   passed as `<WebGL tint>` and eased into the `uTint` uniform:
+   - `next-gen`: amber `#FFE000` (default) · `cyber`: cyan `#22D3EE` · `avant-garde`: cool white `#DBDEEB`
+   - Inner core: dynamic cycling chromatic shader (unchanged by theme)
+   - `--background` and the radial page glows (`rgba(var(--accent-rgb), a)`) shift with the same theme
+4. **Mobile budget**: `WebGL.tsx` caps `pixelRatio` to 1.5 and runs 34 raymarch steps
+   (vs 60 desktop); the rAF loop pauses while `document.hidden`.
 
 ---
 
@@ -40,8 +43,8 @@ The background consists of a shared WebGL canvas (`WebGL.tsx`) featuring the gol
 
 | Role | Font / Styling | Animation Class |
 |---|---|---|
-| **Ghost Watermark** | `font-sans`, uppercase, `text-[28vh]`, `color: rgba(255,255,255,0.1)`, `letter-spacing: 2vh` | `page-anim` |
-| **Page Title (`<h2>`)** | `text-3xl md:text-4xl font-bold tracking-tight text-white` | `page-title-anim` (Slides right &rarr; left) |
+| **Folio Index** | `<SectionFolio>` — `font-mono`, `text-[10px] sm:text-[11px]`, `tracking-[0.2em] sm:tracking-[0.28em]`, `text-white/40`. Reads `NN / TT ───────` — position in the set only, no label (the `<h2>` below and the active navbar link already carry the name). Sits above the `<h2>` on every inner page (`home` excluded). | `page-title-anim` |
+| **Page Title (`<h2>`)** | `font-display text-3xl md:text-4xl font-bold tracking-tight text-white` — the `font-display` class is **required** (section titles are where the font theme reads on inner pages) | `page-title-anim` (Slides right &rarr; left) |
 | **Page Subtitle (`<p>`)** | `text-base md:text-lg opacity-70 text-white/70` | `page-title-anim page-title-anim-d1` |
 | **Hero Title (`<h1>`)** | `font-display text-4xl md:text-5xl font-medium tracking-tight` (theme-aware display font) | `page-anim` |
 | **Card / Item Title** | `text-xl font-semibold text-white` | Inherited from container / card animation |
@@ -85,9 +88,10 @@ interface ExampleSectionProps {
 export default function ExampleSection({ title, subtitle, locale }: ExampleSectionProps) {
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
+      <SectionFolio section="example" locale={locale} />
       {/* 1. Header Block: Right -> Left Animation */}
       {title && (
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 page-title-anim">
+        <h2 className="font-display text-3xl md:text-4xl font-bold mb-2 page-title-anim">
           {title}
         </h2>
       )}
@@ -136,7 +140,7 @@ export default function ExampleSection({ title, subtitle, locale }: ExampleSecti
 When implementing or editing any page:
 - [ ] Registered in `LayoutClient.tsx` Section type and navigation handler.
 - [ ] Section opacity configured in `WebGL.tsx` `ORB_OPACITY`.
-- [ ] Ghost watermark title included in `LayoutClient.tsx`.
+- [ ] Added to `folioOrder` in `src/data/i18n.ts` and `<SectionFolio section="…" locale={locale} />` rendered above the `<h2>`.
 - [ ] Title & Subtitle use `page-title-anim` / `page-title-anim-d1` (Right &rarr; Left).
 - [ ] Content container / Grid uses `page-anim` (Bottom &rarr; Up).
 - [ ] Glassmorphic card styling (`border-white/15`, `backdrop-blur-md`).

@@ -29,6 +29,8 @@ import LocaleSwitcher from "@/components/LocaleSwitcher";
 import HumanMachineSwitcher from "@/components/HumanMachineSwitcher";
 import { feed } from "@/data/feed";
 import { feedPosts } from "@/data/feed";
+import SectionFolio from "@/components/SectionFolio";
+import { useFontTheme, THEME_TINT } from "@/lib/fontTheme";
 
 type Section = 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact';
 
@@ -63,6 +65,7 @@ export default function LayoutClient({
   const [progress, setProgress] = useState(0);
   const [workFilter, setWorkFilter] = useState<'all' | WorkCategory>('all');
   const [hoveredWork, setHoveredWork] = useState<WorkItem | null>(null);
+  const [fontTheme] = useFontTheme();
   // globe/video layer: home hero opens up (orb unfolds) as you scroll into the presentation
   const [scrollP, setScrollP] = useState(0); // 0 top of hero .. 1 fully into presentation
   // menu sections: orb opens on entry and STAYS open while on that section
@@ -172,7 +175,7 @@ export default function LayoutClient({
             section={section} 
             open={orbOpen} 
             onProgress={setProgress} 
-            tint={section === 'work' && hoveredWork?.color ? hoveredWork.color : [1.0, 0.8, 0.0]} 
+            tint={section === 'work' && hoveredWork?.color ? hoveredWork.color : THEME_TINT[fontTheme]}
           />
         </div>
       </div>
@@ -229,12 +232,6 @@ export default function LayoutClient({
 
       <main className="relative z-20 flex-grow text-white pt-16">
         {children}
-        {/* ghost watermark title behind content — slides up with page-anim */}
-        {section !== 'home' && section !== 'team' && (
-          <div key={'g' + section} className="page-anim fixed inset-x-0 top-[12vh] overflow-hidden pointer-events-none">
-            <div className="ghost-title">{section}</div>
-          </div>
-        )}
         {section === 'home' && (
           <>
             <ScrollShowcase />
@@ -246,8 +243,9 @@ export default function LayoutClient({
         <div key={section}>
           {section === 'work' && (
             <div className="max-w-7xl mx-auto px-6 py-16">
+              <SectionFolio section="work" locale={locale} />
               {/* title: slides from right */}
-              <h2 className="text-3xl font-bold mb-2 page-title-anim">{work[l]?.title}</h2>
+              <h2 className="font-display text-3xl font-bold mb-2 page-title-anim">{work[l]?.title}</h2>
               <p className="mb-6 opacity-70 page-title-anim page-title-anim-d1">{work[l]?.subtitle}</p>
               {/* filter tabs */}
               <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Work categories">
@@ -316,7 +314,8 @@ export default function LayoutClient({
           )}
           {section === 'feed' && (
             <div className="max-w-2xl mx-auto px-6 py-16">
-              <h2 className="text-3xl font-bold mb-2 page-title-anim">{feed[l]?.title}</h2>
+              <SectionFolio section="feed" locale={locale} />
+              <h2 className="font-display text-3xl font-bold mb-2 page-title-anim">{feed[l]?.title}</h2>
               <p className="mb-6 opacity-70 page-title-anim page-title-anim-d1">{feed[l]?.subtitle}</p>
 
               {/* placeholder note */}

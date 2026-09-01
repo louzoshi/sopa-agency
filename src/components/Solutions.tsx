@@ -6,6 +6,7 @@
 // Ported as a single scroll listener — no GSAP needed for one opacity value per card.
 import { useEffect, useRef } from 'react';
 import { solutions } from '@/data/solutions';
+import SectionFolio from '@/components/SectionFolio';
 
 export default function Solutions({ title, locale }: { title?: string; locale: string }) {
   const wraps = useRef<(HTMLDivElement | null)[]>([]);
@@ -37,7 +38,8 @@ export default function Solutions({ title, locale }: { title?: string; locale: s
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold page-title-anim">{title}</h2>
+      <SectionFolio section="solutions" locale={locale} />
+      <h2 className="font-display text-3xl font-bold page-title-anim">{title}</h2>
       <p className="mt-3 mb-6 max-w-2xl text-white/70 leading-relaxed page-title-anim page-title-anim-d1">
         {locale === 'pt'
           ? 'Sistemas sob medida, construídos em torno da sua operação — de agentes de IA a receita onchain. Entendemos o problema, desenhamos, construímos e colocamos em produção.'

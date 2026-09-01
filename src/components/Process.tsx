@@ -33,7 +33,7 @@ export default function Process({ locale }: { locale: string }) {
         <div className="inline-flex rounded-xl border border-amber-300/30 bg-amber-300/10 px-4 py-2 font-mono text-xs text-amber-200">
           {processIntro.label}
         </div>
-        <h2 className="mt-6 text-3xl sm:text-5xl font-black tracking-tighter uppercase leading-[0.95] page-title-anim">
+        <h2 className="font-display mt-6 text-3xl sm:text-5xl font-black tracking-tighter uppercase leading-[0.95] page-title-anim">
           {t(processIntro.title)}
         </h2>
         <p className="mt-4 max-w-3xl text-white/70 leading-relaxed page-title-anim page-title-anim-d1">

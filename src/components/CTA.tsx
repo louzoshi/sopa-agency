@@ -38,7 +38,7 @@ export default function CTA({
       {/* glow rising from the bottom */}
       <div
         className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
-        style={{ background: 'radial-gradient(60% 120% at 50% 100%, rgba(255,204,0,0.14), transparent 70%)' }}
+        style={{ background: 'radial-gradient(60% 120% at 50% 100%, rgba(var(--accent-rgb),0.14), transparent 70%)' }}
       />
       <h2 className="relative text-3xl md:text-4xl font-bold mb-3">{title ?? t.title}</h2>
       <p className="relative opacity-70 mb-10 max-w-xl mx-auto">{subtitle ?? t.subtitle}</p>

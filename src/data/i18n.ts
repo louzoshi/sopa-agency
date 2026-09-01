@@ -1,4 +1,10 @@
 // data/i18n.ts
+
+// Ordered inner-page set for the folio index header (home excluded — it's the hero).
+// Labels come from i18n[locale].menu[key], so this list stays locale-agnostic.
+export const folioOrder = ['work', 'team', 'feed', 'solutions', 'about', 'contact'] as const;
+export type FolioSection = (typeof folioOrder)[number];
+
 export const i18n = {
   en: {
     menu: {
