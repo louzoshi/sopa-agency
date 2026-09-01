@@ -50,7 +50,7 @@ export default function Process({ locale }: { locale: string }) {
             className="process-phase rounded-2xl border border-white/15 bg-black/80 backdrop-blur-md p-8 md:p-12 transition-colors hover:border-amber-300/40"
           >
             <div className="grid gap-8 md:grid-cols-12">
-              <div className="md:col-span-5 space-y-4">
+              <div className="md:col-span-5 space-y-4 min-w-0">
                 <div className="font-mono text-sm font-bold tracking-widest text-amber-300">{t(p.label)}</div>
                 <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">{t(p.title)}</h3>
                 <p className="text-base leading-relaxed text-white/70">{t(p.body)}</p>
@@ -65,9 +65,9 @@ export default function Process({ locale }: { locale: string }) {
                   )}
                 </ul>
               </div>
-              {/* diagram */}
-              <div className="md:col-span-7 flex items-center">
-                <div className="w-full rounded-xl border border-white/10 bg-white/[0.03] p-6 font-mono text-xs overflow-x-auto">
+              {/* diagram — scrolls inside its own box; min-w-0 lets the grid track shrink */}
+              <div className="md:col-span-7 flex items-center min-w-0">
+                <div className="w-full min-w-0 rounded-xl border border-white/10 bg-white/[0.03] p-4 sm:p-6 font-mono text-xs overflow-x-auto">
                   <div className="flex items-center gap-2 min-w-max">
                     {(locale === 'pt' ? p.diagram.pt : p.diagram.en).map((node, j, arr) => (
                       <span key={j} className="flex items-center gap-2">
