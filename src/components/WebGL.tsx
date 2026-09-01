@@ -149,7 +149,7 @@ void main() {
 
 //  home scene: full-screen shader background plane
 // and 350-point additive sprite clouds.
-const ORB_OPACITY: Record<string, number> = { home: 1.0, work: 0.3, team: 0.3, feed: 0.4, solutions: 0.5, about: 0.4, contact: 0.3 };
+const ORB_OPACITY: Record<string, number> = { home: 1.0, work: 0.3, team: 0.18, feed: 0.4, solutions: 0.5, about: 0.4, contact: 0.3 };
 
 export default function WebGL({ section = 'home', open, onProgress, tint = [1.0, 0.8, 0.0] }: { section?: string; open?: number; onProgress?: (progress: number) => void; tint?: [number, number, number] }) {
   const containerRef = useRef<HTMLDivElement>(null);

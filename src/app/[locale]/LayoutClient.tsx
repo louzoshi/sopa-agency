@@ -177,6 +177,18 @@ export default function LayoutClient({
         </div>
       </div>
 
+      {/* team: dark scrim over the orb so the cards + contributor data read cleanly */}
+      {section === 'team' && (
+        <div
+          className="fixed inset-0 z-[5] pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 35%, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.82) 55%, rgba(10,10,10,0.94) 100%)',
+          }}
+          data-section-scrim
+        />
+      )}
+
       <Analytics section={section} />
       <Header locale={locale} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} onNavigate={navigate} />
 
@@ -218,7 +230,7 @@ export default function LayoutClient({
       <main className="relative z-20 flex-grow text-white pt-16">
         {children}
         {/* ghost watermark title behind content — slides up with page-anim */}
-        {section !== 'home' && (
+        {section !== 'home' && section !== 'team' && (
           <div key={'g' + section} className="page-anim fixed inset-x-0 top-[12vh] overflow-hidden pointer-events-none">
             <div className="ghost-title">{section}</div>
           </div>
