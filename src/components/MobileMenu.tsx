@@ -2,11 +2,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+type Section = 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact';
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   locale: string;
-  onNavigate: (section: 'home' | 'work' | 'team' | 'feed' | 'solutions' | 'about' | 'contact') => void;
+  section: Section;
+  onNavigate: (section: Section) => void;
 }
 
 const LINKS = [
@@ -21,7 +24,7 @@ const LINKS = [
 
 const EXIT_MS = 220; // matches .menu-out duration in globals.css
 
-export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, locale, section, onNavigate }: MobileMenuProps) {
   // stay mounted through the close animation instead of vanishing instantly
   const [rendered, setRendered] = useState(isOpen);
   const [closing, setClosing] = useState(false);
@@ -43,6 +46,7 @@ export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: Mobi
   if (!rendered) return null;
 
   const isPt = locale === 'pt';
+  const hrefFor = (id: string) => (id === 'home' ? `/${locale}` : `/${locale}/${id}`);
 
   return (
     <div className={`fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 flex flex-col justify-between p-6 sm:p-10 ${closing ? 'menu-out' : 'menu-in'}`}>
@@ -51,7 +55,7 @@ export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: Mobi
         <span className="text-xl font-bold font-display tracking-tight text-white">SOPA</span>
         <button
           onClick={onClose}
-          className="w-11 h-11 flex items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:border-amber-400 hover:text-amber-400 transition-all text-xl cursor-pointer"
+          className="-mr-2 flex h-11 w-11 items-center justify-center text-xl text-white/70 hover:text-amber-400 transition-colors cursor-pointer"
           aria-label="Close menu"
         >
           ✕
@@ -63,12 +67,16 @@ export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: Mobi
         {LINKS.map((item, index) => {
           const num = String(index + 1).padStart(2, '0');
           const label = isPt ? item.pt : item.en;
+          const active = section === item.id;
 
           return (
             <a
               key={item.id}
-              href={`#${item.id}`}
-              className="group flex items-baseline justify-between py-2 border-b border-white/5 hover:border-amber-400/40 transition-all menu-link-in"
+              href={hrefFor(item.id)}
+              aria-current={active ? 'page' : undefined}
+              className={`group flex items-baseline justify-between py-2 border-b transition-all menu-link-in ${
+                active ? 'border-amber-400/40' : 'border-white/5 hover:border-amber-400/40'
+              }`}
               style={{ animationDelay: closing ? '0s' : `${0.06 + index * 0.045}s` }}
               onClick={(e) => {
                 e.preventDefault();
@@ -76,10 +84,20 @@ export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: Mobi
                 onClose();
               }}
             >
-              <span className="text-3xl sm:text-4xl font-bold font-display text-white group-hover:text-amber-300 group-hover:translate-x-2 transition-all">
+              <span
+                className={`text-3xl sm:text-4xl font-bold font-display transition-all ${
+                  active
+                    ? 'text-amber-300 translate-x-2'
+                    : 'text-white group-hover:text-amber-300 group-hover:translate-x-2'
+                }`}
+              >
                 {label}
               </span>
-              <span className="font-mono text-xs text-white/40 group-hover:text-amber-400 transition-colors">
+              <span
+                className={`font-mono text-xs transition-colors ${
+                  active ? 'text-amber-400' : 'text-white/40 group-hover:text-amber-400'
+                }`}
+              >
                 {num}
               </span>
             </a>

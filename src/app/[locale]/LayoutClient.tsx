@@ -396,7 +396,7 @@ export default function LayoutClient({
       {/* Footer: normal flow — appears naturally after content when scrolled */}
       <Footer locale={locale} />
 
-      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} onNavigate={navigate} />
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} locale={locale} section={section} onNavigate={navigate} />
       <TransitionOverlay hidden={!isHome} />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
