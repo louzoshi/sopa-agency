@@ -1,5 +1,7 @@
 // src/data/team.ts
-export type Member = { handle: string; github?: string; skills?: [string, number][]; bio?: { en: string; pt: string }; ai?: boolean };
+// social handles are bare usernames — the card builds the full URL:
+//   github → github.com/<github>   x → x.com/<x>   linkedin → linkedin.com/in/<linkedin>
+export type Member = { handle: string; github?: string; x?: string; linkedin?: string; skills?: [string, number][]; bio?: { en: string; pt: string }; ai?: boolean };
 
 // skill key → display labels
 export const skillLabels: Record<string, { en: string; pt: string }> = {
