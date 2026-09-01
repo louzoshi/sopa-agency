@@ -51,7 +51,7 @@ export default function ThemeSwitcher() {
   return (
     <div className="relative">
       {isOpen && (
-        <div className="mb-2 p-2 rounded-xl border border-white/20 bg-black/90 backdrop-blur-xl shadow-2xl flex flex-col gap-1 min-w-[200px] page-anim">
+        <div className="absolute bottom-full right-0 z-[62] mb-2 w-[220px] max-w-[calc(100vw-2rem)] p-2 rounded-xl border border-white/20 bg-black/95 backdrop-blur-xl shadow-2xl flex flex-col gap-1 menu-link-in">
           <div className="px-3 py-1 text-[11px] font-mono uppercase tracking-wider text-white/50 border-b border-white/10 mb-1">
             Select Font Theme
           </div>
@@ -80,7 +80,7 @@ export default function ThemeSwitcher() {
         title="Switch Typography Theme"
       >
         <span className="font-mono text-amber-400 font-bold">Aa</span>
-        <span className="opacity-80">
+        <span className="hidden sm:inline opacity-80">
           {THEMES.find((t) => t.id === currentTheme)?.name}
         </span>
         <span className="text-[10px] opacity-50">▼</span>

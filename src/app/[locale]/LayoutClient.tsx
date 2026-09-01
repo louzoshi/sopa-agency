@@ -190,7 +190,7 @@ export default function LayoutClient({
       )}
 
       <Analytics section={section} />
-      <Header locale={locale} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} onNavigate={navigate} />
+      <Header locale={locale} section={section} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} onNavigate={navigate} />
 
       {/* Hero content overlay — only on home, over orb */}
       {section === 'home' && (
@@ -400,8 +400,15 @@ export default function LayoutClient({
       <TransitionOverlay hidden={!isHome} />
       <Showreel videoUrl={reelUrl} onClose={() => setReelUrl(null)} />
       <WorkDetail item={detailItem} onClose={() => setDetailItem(null)} />
-      {/* grouped bottom-right switchers: [HUMAN|MACHINE] [Aa theme] [EN|PT] */}
-      <div className="fixed bottom-4 right-4 z-[60] flex items-center gap-2">
+      {/* grouped switchers: [HUMAN|MACHINE] [Aa theme] [EN|PT]
+          desktop → always-on pill row, bottom-right
+          mobile  → hidden until the menu is open, then a centered row at the
+                    menu's bottom (keeps the resting screen uncluttered) */}
+      <div
+        className={`fixed z-[60] items-center gap-2 inset-x-4 bottom-6 flex-wrap justify-center sm:inset-x-auto sm:bottom-4 sm:right-4 sm:flex-nowrap sm:justify-end ${
+          isMenuOpen ? 'flex' : 'hidden'
+        } sm:flex`}
+      >
         <HumanMachineSwitcher locale={locale} />
         <ThemeSwitcher />
         <LocaleSwitcher />

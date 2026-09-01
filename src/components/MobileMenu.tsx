@@ -1,5 +1,6 @@
 // src/components/MobileMenu.tsx
 'use client';
+import { useEffect, useState } from 'react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,13 +19,33 @@ const LINKS = [
   { id: 'contact', en: 'Contact', pt: 'Contato' },
 ] as const;
 
+const EXIT_MS = 220; // matches .menu-out duration in globals.css
+
 export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: MobileMenuProps) {
-  if (!isOpen) return null;
+  // stay mounted through the close animation instead of vanishing instantly
+  const [rendered, setRendered] = useState(isOpen);
+  const [closing, setClosing] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- mount before the open animation plays
+      setRendered(true);
+      setClosing(false);
+      return;
+    }
+    if (!rendered) return;
+    setClosing(true);
+    const t = setTimeout(() => setRendered(false), EXIT_MS);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run on open/close toggles
+  }, [isOpen]);
+
+  if (!rendered) return null;
 
   const isPt = locale === 'pt';
 
   return (
-    <div className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 flex flex-col justify-between p-6 sm:p-10 page-anim">
+    <div className={`fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 flex flex-col justify-between p-6 sm:p-10 ${closing ? 'menu-out' : 'menu-in'}`}>
       {/* Top bar with Logo and Close button */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <span className="text-xl font-bold font-display tracking-tight text-white">SOPA</span>
@@ -47,7 +68,8 @@ export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: Mobi
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="group flex items-baseline justify-between py-2 border-b border-white/5 hover:border-amber-400/40 transition-all"
+              className="group flex items-baseline justify-between py-2 border-b border-white/5 hover:border-amber-400/40 transition-all menu-link-in"
+              style={{ animationDelay: closing ? '0s' : `${0.06 + index * 0.045}s` }}
               onClick={(e) => {
                 e.preventDefault();
                 onNavigate(item.id);
@@ -64,13 +86,6 @@ export default function MobileMenu({ isOpen, onClose, locale, onNavigate }: Mobi
           );
         })}
       </nav>
-
-      {/* Footer Info */}
-      <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/50 font-mono">
-        <span>SOPA AGENCY © 2026</span>
-        <span className="text-amber-400/80">CREATIVE TECH & AI</span>
-      </div>
     </div>
   );
 }
-
