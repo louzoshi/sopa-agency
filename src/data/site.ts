@@ -5,6 +5,7 @@ const SOCIALS = [
   { name: 'sopa.team', url: 'https://sopa.team' },
   { name: 'Farcaster /gnars', url: 'https://warpcast.com/~/channel/gnars' },
   { name: 'Instagram', url: 'https://www.instagram.com/sopa_agency/' },
+  { name: 'X', url: 'https://x.com/sopaagency' },
   { name: 'GitHub', url: 'https://github.com/sopa-agency' },
   { name: 'crew@sopa.team', url: 'mailto:crew@sopa.team' },
 ];
