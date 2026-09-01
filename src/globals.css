@@ -209,6 +209,29 @@ body {
   }
 }
 
+/* mobile menu: backdrop fades in/out, nav links cascade in on open.
+   Root swaps .menu-in <-> .menu-out (MobileMenu keeps the overlay mounted
+   through the exit animation before unmounting). */
+@keyframes menu-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes menu-backdrop-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+.menu-in  { animation: menu-backdrop-in 0.28s ease-out both; }
+.menu-out { animation: menu-backdrop-out 0.22s ease-in both; }
+
+@keyframes menu-link-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.menu-link-in {
+  opacity: 0;
+  animation: menu-link-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Marquee Animation */
 @keyframes marquee {
   0% { transform: translateX(0%); }
