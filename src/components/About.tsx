@@ -1,5 +1,6 @@
 // src/components/About.tsx
 'use client';
+import SectionFolio from '@/components/SectionFolio';
 
 export default function About({ locale }: { locale: string }) {
   const t = locale === 'pt' ? pt : en;
@@ -8,8 +9,8 @@ export default function About({ locale }: { locale: string }) {
     <section className="max-w-7xl mx-auto px-6 py-16 space-y-24">
       {/* Hero / Intro */}
       <div className="page-anim space-y-6">
-        {/* <div className="font-mono text-xs text-amber-300 uppercase tracking-widest">{t.hero.badge}</div> */}
-        <h2 className="text-3xl sm:text-4xl font-bold page-title-anim">{t.hero.title}</h2>
+        <SectionFolio section="about" locale={locale} />
+        <h2 className="font-display text-3xl sm:text-4xl font-bold page-title-anim">{t.hero.title}</h2>
         <p className="max-w-3xl text-xl font-medium text-white/90 leading-relaxed page-title-anim page-title-anim-d1">{t.hero.tagline}</p>
         <p className="max-w-3xl text-base opacity-75 leading-relaxed">{t.hero.body}</p>
       </div>

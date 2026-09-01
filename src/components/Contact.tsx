@@ -1,6 +1,7 @@
 // src/components/Contact.tsx
 // sopa.team/contato port: terminal-styled brief form + short LLM follow-up chat.
 import { useEffect, useRef, useState } from 'react';
+import SectionFolio from '@/components/SectionFolio';
 
 // pill options are [en, pt] pairs — same value submitted either way
 const TYPES = [
@@ -224,7 +225,8 @@ export default function Contact({ title, locale }: { title?: string; locale: str
 
   return (
     <section className="max-w-3xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold mb-2 page-title-anim">{title}</h2>
+      <SectionFolio section="contact" locale={locale} />
+      <h2 className="font-display text-3xl font-bold mb-2 page-title-anim">{title}</h2>
       <p className="mb-6 opacity-70 page-title-anim page-title-anim-d1">
         {locale === 'pt'
           ? 'Descreva o projeto em linhas gerais. Nosso agente ajuda a definir o escopo.'

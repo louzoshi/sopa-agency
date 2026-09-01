@@ -54,7 +54,7 @@ export default function Footer({ locale }: { locale: string }) {
       {/* warm glow rising from the very bottom — mirrors the CTA section */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
-        style={{ background: 'radial-gradient(60% 120% at 50% 100%, rgba(255,204,0,0.10), transparent 70%)' }}
+        style={{ background: 'radial-gradient(60% 120% at 50% 100%, rgba(var(--accent-rgb),0.10), transparent 70%)' }}
       />
 
       <div className="relative mx-auto max-w-5xl px-6 py-10 sm:py-14">

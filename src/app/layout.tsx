@@ -6,41 +6,72 @@ import {
   Plus_Jakarta_Sans,
   JetBrains_Mono,
   Syne,
-  Outfit,
   Inter,
+  Space_Mono,
+  IBM_Plex_Mono,
+  Newsreader,
 } from "next/font/google";
 import "@/globals.css";
 
 const GA_ID = "G-HWM0ZNJJVF";
 
+// Default theme (Next-Gen AI) trio — the only fonts on the critical path.
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
+// Non-default theme fonts — self-hosted but not preloaded; fetched when the
+// visitor picks that theme.
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
+
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -57,8 +88,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} ${syne.variable} ${outfit.variable} ${inter.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} ${syne.variable} ${inter.variable} ${spaceMono.variable} ${ibmPlexMono.variable} ${newsreader.variable} h-full antialiased`}
     >
+      <head>
+        {/* Pre-paint theme restore: apply the saved font theme before first paint so
+            returning visitors don't flash the default fonts / background (no CLS). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('sopa-font-theme');if(t&&['next-gen','cyber','avant-garde'].indexOf(t)>-1)document.documentElement.dataset.fontTheme=t;}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">
         {/* Google tag (gtag.js) — server-rendered so Google's tag check finds it in HTML */}
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />

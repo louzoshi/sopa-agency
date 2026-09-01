@@ -71,7 +71,7 @@ export default function MemberPanel({ member, locale, onClose }: { member: Membe
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 pt-24" onClick={onClose}>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl border border-white/15 bg-black/90 p-8 shadow-[0_0_60px_rgba(255,204,0,0.08)] backdrop-blur-xl"
+        className="relative w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl border border-white/15 bg-black/90 p-8 shadow-[0_0_60px_rgba(var(--accent-rgb),0.08)] backdrop-blur-xl"
         style={{ animation: 'modal-pop 0.25s cubic-bezier(0.34,1.56,0.64,1) both' }}
         onClick={e => e.stopPropagation()}
       >

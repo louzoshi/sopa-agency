@@ -70,33 +70,49 @@ const navigate = (s: Section) => {
 
 ## 4. Fonts (Font Theme System)
 
-Fonts are user-switchable at runtime via the pill in the bottom-right corner (`ThemeSwitcher.tsx`, persisted to `localStorage: sopa-font-theme`). All fonts load via `next/font/google` in `src/app/layout.tsx`.
+Each theme is a distinct visual mode — its own **font trio** (display + body + mono) **and**
+its own **orb / background / glow colour**. Switchable at runtime via the pill bottom-right
+(`ThemeSwitcher.tsx`), persisted to `localStorage: sopa-font-theme`. Fonts load via
+`next/font/google` in `src/app/layout.tsx` — only the default trio is `preload: true`.
 
-| Theme | id | Display | Body |
-|---|---|---|---|
-| Next-Gen AI (default) | `next-gen` | Space Grotesk | Plus Jakarta Sans |
-| Cybernetic | `cyber` | Outfit | Inter |
-| Avant-Garde | `avant-garde` | Syne | Plus Jakarta Sans |
+| Theme | id | Display | Body | Mono | Accent / orb |
+|---|---|---|---|---|---|
+| Next-Gen AI (default) | `next-gen` | Space Grotesk | Plus Jakarta Sans | JetBrains Mono | amber `#FFE000` |
+| Cybernetic | `cyber` | Space Mono | Inter | IBM Plex Mono | cyan `#22D3EE` |
+| Avant-Garde | `avant-garde` | Syne | Newsreader (serif) | JetBrains Mono | cool white `#DBDEEB` |
 
 **How it works:**
-1. Each Google font is loaded as a CSS variable (`--font-space-grotesk`, `--font-plus-jakarta`, etc.) on `<html>`.
-2. `globals.css` maps them into semantic vars under a `[data-font-theme="..."]` selector:
-   ```css
-   --font-display: var(--font-space-grotesk), system-ui, sans-serif;
-   --font-body: var(--font-plus-jakarta), system-ui, sans-serif;
-   --font-code: var(--font-jetbrains-mono), monospace;  /* JetBrains Mono, not themed */
-   ```
-3. Tailwind picks them up via `@theme inline` → `font-sans`, `font-display`, `font-mono` utilities.
-4. `ThemeSwitcher.tsx` sets `document.documentElement.dataset.fontTheme`.
+1. `src/lib/fontTheme.ts` — `useFontTheme()` hook: localStorage + `data-font-theme` on
+   `<html>` + a `sopa-fonttheme` CustomEvent so the switcher and `LayoutClient` stay in sync.
+   Also exports `THEME_TINT` (orb RGB per theme).
+2. `layout.tsx` has a pre-paint inline `<script>` that applies the saved theme before first
+   paint (no font/colour flash for returning visitors).
+3. `globals.css` — each `:root[data-font-theme="…"]` block sets `--font-display/body/code`
+   **plus** `--background` and `--accent-rgb` (bare channels for `rgba(var(--accent-rgb), a)`
+   glows). Tailwind exposes the font vars via `@theme inline` → `font-sans` / `font-display`
+   / `font-mono`.
+4. Section `<h2>`s carry the `font-display` class explicitly (a global `h1..h4` rule would
+   break the mono ASCII in `HumanMachineSwitcher`). Card titles stay in the body font.
+5. `LayoutClient` reads the theme → passes `THEME_TINT[theme]` to `<WebGL tint>` (the shader
+   eases `uTint`); work-hover colour still overrides.
 
-**Usage:** body text inherits automatically; display/headings use `.font-display` (theme-aware) or `font-display` utility. To add a theme: load the font in layout.tsx, add a `[data-font-theme]` block in globals.css, add an entry to `THEMES` in ThemeSwitcher.tsx.
+**Add a theme:** load its fonts in `layout.tsx` (`preload: false`), add a
+`:root[data-font-theme]` block in `globals.css`, add entries to `FONT_THEMES` + `THEME_TINT`
+in `fontTheme.ts` and `THEMES` in `ThemeSwitcher.tsx`.
+
+**Chrome stays amber:** the `amber-*` utilities (buttons, borders, folio, nav) are *not*
+themed — only orb, `--background`, and the radial glows recolour. `ScrollShowcase.tsx`
+(home 3D scroll) also stays amber by design.
 
 ## 5. Colour Palette (Amber/Black)
 
 ```css
-:root { --background: #0a0a0a; --foreground: #ededed; }
+:root { --background: #0a0a0a; --foreground: #ededed; --accent-rgb: 255, 224, 0; }
 ```
-- Primary accent: `amber-300` / `amber-400` / `amber-600`
+- Primary accent: `amber-300` / `amber-400` / `amber-600` — UI chrome, **not** theme-swapped
+- `--background` + `--accent-rgb`: overridden per `:root[data-font-theme]` (see §4). Use
+  `rgba(var(--accent-rgb), a)` for orb-adjacent glows so they follow the theme; use the
+  `amber-*` utilities for everything else.
 - Backgrounds: `black/40` with `backdrop-blur-sm`
 - Borders: `border-white/15` or `border-white/20`
 - Text: `text-white`, `text-white/70`, `text-white/50`, `text-white/30`
@@ -134,8 +150,8 @@ const data = yourSection[l] ?? yourSection.en;
 1. Add section to `Section` union type in LayoutClient.
 2. Create `src/data/your-section.ts` with `en`/`pt` content.
 3. Import data in LayoutClient.
-4. Add conditional render block using animation classes above.
-5. Add locale strings to `src/data/i18n.ts` (menu labels).
+4. Add conditional render block using animation classes above. Render `<SectionFolio section="…" locale={locale} />` as the first child, above the `<h2>`.
+5. Add locale strings to `src/data/i18n.ts` (menu labels) and the section key to `folioOrder` there.
 6. Add menu links in `Header.tsx` and `MobileMenu.tsx` (both take `onNavigate`).
 7. Add `orbOpacity` entry in `WebGL.tsx` if custom orb visibility needed.
 8. Run `pnpm run lint && pnpm run build` to verify.

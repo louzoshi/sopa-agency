@@ -5,6 +5,7 @@ import { members, team, type Member } from '@/data/team';
 import MemberPanel from '@/components/MemberPanel';
 import SocialLinks from '@/components/SocialLinks';
 import Disciplines from '@/components/Disciplines';
+import SectionFolio from '@/components/SectionFolio';
 
 function Card({ member, locale, onOpen }: { member: Member; locale: string; onOpen: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -89,6 +90,7 @@ export default function Team({ title, subtitle, locale }: { title?: string; subt
   const [selected, setSelected] = useState<Member | null>(null);
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
+      <SectionFolio section="team" locale={locale} />
       <div className="mb-12">
         <div className="mb-4 flex items-center gap-3 page-title-anim">
           <span className="h-px w-10 bg-gradient-to-r from-amber-300/70 to-transparent" />
@@ -96,7 +98,7 @@ export default function Team({ title, subtitle, locale }: { title?: string; subt
             {locale === 'pt' ? 'colaboradores verificados' : 'verified contributors'}
           </span>
         </div>
-        <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-white page-title-anim">{title}</h2>
+        <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white page-title-anim">{title}</h2>
         {subtitle && (
           <p className="mt-4 max-w-xl text-lg font-medium text-white/60 leading-relaxed page-title-anim page-title-anim-d1">
             {subtitle}

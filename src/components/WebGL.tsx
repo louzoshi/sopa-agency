@@ -33,6 +33,7 @@ uniform sampler2D iChannel1;
 uniform float orbOpacity;
 uniform float intensity;
 uniform vec3 uTint;
+uniform float uSteps;
 out vec4 outColor;
 
 #define R(p, a) p = p * cos(a) + vec2(-p.y, p.x) * sin(a)
@@ -137,6 +138,7 @@ void main() {
     float open = 1.0 - orbOpacity;
     float scale = mix(.5, 20.0*(orbOpacity*orbOpacity), Sin01(0.1 * iTime*(.01))) + open * 25.0;
     for (int i = 0; i < 60; i++) {
+        if (i >= int(uSteps)) break; // mobile runs fewer raymarch steps
         vec3 p = ro + t * rd ; // //(orbOpacity) is more solid lines
         float d = Map(p, scale);
         if (t > 20.0 || d < 0.0001) {
@@ -166,10 +168,13 @@ export default function WebGL({ section = 'home', open, onProgress, tint = [1.0,
     const camera = new THREE.PerspectiveCamera(90, container.clientWidth / container.clientHeight, 1, 1000);
     camera.position.set(0, 0, 50);
 
+    // sprite clouds + a lighter shader budget on phones (also gates raymarch steps + DPR)
+    const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
+
     const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false });
     renderer.debug.checkShaderErrors = true;
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isDesktop ? 2 : 1.5));
     container.appendChild(renderer.domElement);
 
     const target = new THREE.Object3D();
@@ -193,6 +198,7 @@ export default function WebGL({ section = 'home', open, onProgress, tint = [1.0,
       adj: { type: 'f', value: 0.2 - window.innerHeight / window.innerWidth },
       orbOpacity: { type: 'f', value: 1.0 },
       intensity: { type: 'f', value: 1.0 },
+      uSteps: { type: 'f', value: isDesktop ? 60.0 : 34.0 },
       uTint: { type: 'v3', value: new THREE.Vector3(tintRef.current[0], tintRef.current[1], tintRef.current[2]) },
       iChannel0: { type: 't', value: tex1 },
       iChannel1: { type: 't', value: sprite },
@@ -211,7 +217,6 @@ export default function WebGL({ section = 'home', open, onProgress, tint = [1.0,
     scene.add(backgroundPlane);
 
     // ambient sprites: two point clouds, 350 points, additive blending (desktop only, like the original)
-    const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
     if (isDesktop) {
       const positions: number[] = [];
       for (let i = 0; i < 350; i++) {
@@ -219,10 +224,11 @@ export default function WebGL({ section = 'home', open, onProgress, tint = [1.0,
       }
       const geometry = new THREE.BufferGeometry();
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-      const params = [
-        [[1.0, 0.88, 0.0], sprite, 0.3],   // amber
-        [[0.72, 0.54, 0.05], sprite, 0.3], // dark gold
-      ] as const;
+      const [tr, tg, tb] = tintRef.current; // clouds pick up the active theme colour
+      const params: [[number, number, number], THREE.Texture, number][] = [
+        [[tr, tg, tb], sprite, 0.3],
+        [[tr * 0.6, tg * 0.6, tb * 0.6], sprite, 0.3],
+      ];
       for (const [color, map, size] of params) {
         const material = new THREE.PointsMaterial({
           size,
@@ -244,6 +250,7 @@ export default function WebGL({ section = 'home', open, onProgress, tint = [1.0,
 
     function animate() {
       rafId = requestAnimationFrame(animate);
+      if (document.hidden) return; // don't burn GPU on a backgrounded tab
       timer.update();
       const d = timer.getDelta();
       uniforms.iTime.value += d;
