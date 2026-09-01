@@ -22,11 +22,12 @@ const LINKS: { id: Section; label: string }[] = [
 ];
 
 // underline grows from the left on hover, stays fully drawn while active —
-// so the navbar itself shows which section the client is looking at
-function NavLink({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+// so the navbar itself shows which section the client is looking at.
+// real href (crawlable / cmd-click / no-JS) + onClick for the in-app SPA wipe.
+function NavLink({ label, href, active, onClick }: { label: string; href: string; active: boolean; onClick: () => void }) {
   return (
     <a
-      href="#"
+      href={href}
       onClick={e => { e.preventDefault(); onClick(); }}
       aria-current={active ? 'page' : undefined}
       className={`group relative py-1 transition-colors ${active ? 'text-amber-300' : 'text-white/80 hover:text-white'}`}
@@ -41,26 +42,30 @@ function NavLink({ label, active, onClick }: { label: string; active: boolean; o
   );
 }
 
-export default function Header({ section, setIsMenuOpen, onNavigate }: HeaderProps) {
+export default function Header({ locale, section, setIsMenuOpen, onNavigate }: HeaderProps) {
+  const hrefFor = (id: Section) => (id === 'home' ? `/${locale}` : `/${locale}/${id}`);
   return (
-    <header className="fixed top-0 inset-x-0 z-30 flex h-16 items-center justify-between px-4 sm:px-6 bg-black/70 backdrop-blur text-white">
+    // solid, self-isolated bar: the dark background does NOT rely on backdrop-filter
+    // (stacked backdrop-filter layers can flicker/drop the header in some browsers).
+    // isolate = own stacking context so section content can never paint over it.
+    <header className="fixed top-0 inset-x-0 z-30 isolate flex h-16 items-center justify-between border-b border-white/10 bg-black/90 px-4 sm:px-6 text-white backdrop-blur-md">
       <div className="flex items-center space-x-4">
-        <a href="#" className="flex items-center" onClick={e => { e.preventDefault(); onNavigate('home'); }}>
+        <a href={hrefFor('home')} className="flex items-center" onClick={e => { e.preventDefault(); onNavigate('home'); }}>
           <span className="text-xl font-bold">SOPA</span>
         </a>
       </div>
       <nav className="hidden md:flex space-x-6">
         {LINKS.map(l => (
-          <NavLink key={l.id} label={l.label} active={section === l.id} onClick={() => onNavigate(l.id)} />
+          <NavLink key={l.id} label={l.label} href={hrefFor(l.id)} active={section === l.id} onClick={() => onNavigate(l.id)} />
         ))}
       </nav>
       <button
-        className="md:hidden mr-1 sm:mr-2 p-2 -my-2 flex flex-col justify-center cursor-pointer"
+        className="md:hidden mr-1 sm:mr-2 -my-2 p-2 flex flex-col justify-center gap-1.5 cursor-pointer"
         aria-label="Open menu"
         onClick={() => setIsMenuOpen(true)}
       >
-        <span className="block h-0.5 w-6 bg-white mb-1.5"></span>
-        <span className="block h-0.5 w-6 bg-white mb-1.5"></span>
+        <span className="block h-0.5 w-6 bg-white"></span>
+        <span className="block h-0.5 w-6 bg-white"></span>
         <span className="block h-0.5 w-6 bg-white"></span>
       </button>
     </header>
