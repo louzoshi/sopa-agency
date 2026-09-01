@@ -4,6 +4,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { members, skillLabels, type Member } from '@/data/team';
+import SocialLinks from '@/components/SocialLinks';
 
 type Proof =
   | { kind: 'gh'; repo: string; text: string; date: string; url: string }
@@ -91,10 +92,14 @@ export default function MemberPanel({ member, locale, onClose }: { member: Membe
           <div>
             <div className="text-2xl font-bold tracking-tight">@{member.handle}</div>
             <div className="font-mono text-xs text-white/40">
-              {member.github && <>gh/{member.github} · </>}
               {locale === 'pt' ? (member.ai ? 'agente autônomo' : 'humano verificável') : (member.ai ? 'autonomous agent' : 'verifiable human')}
             </div>
           </div>
+        </div>
+
+        {/* social profiles */}
+        <div className="mb-6">
+          <SocialLinks member={member} mode="buttons" />
         </div>
 
         {member.bio && (
