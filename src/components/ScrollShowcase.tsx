@@ -24,31 +24,6 @@ type SectionDef = {
 
 // ---------- section builders (ported from sopa-2026 objects3D, SOPA palette) ----------
 
-// BeamObject3D: light columns that grow up/down from center
-function buildBeams() {
-  const group = new THREE.Group();
-  const mkBeam = (color: string, w: number, x: number, z: number) => {
-    const geo = new THREE.PlaneGeometry(w, 30);
-    const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.7, side: THREE.DoubleSide, depthWrite: false });
-    const m = new THREE.Mesh(geo, mat);
-    m.position.set(x, 0, z);
-    m.scale.y = 0.01;
-    group.add(m);
-    return m;
-  };
-  const beams = [mkBeam('#808080', 1, 15, -10), mkBeam(AMBER, 3, 0, -5), mkBeam('#4c4c4c', 1.5, -18, -15)];
-  return {
-    el: group,
-    update(t: number) {
-      // gentle pulse
-      beams.forEach((b, i) => {
-        b.material.opacity = 0.5 + Math.sin(t * 0.001 + i * 2) * 0.25;
-        b.scale.y = 1 + Math.sin(t * 0.0015 + i) * 0.15;
-      });
-    },
-  };
-}
-
 // DropObject3D: expanding water-ripple rings (texture-drop.png), staggered loop
 function buildDrop() {
   const group = new THREE.Group();
@@ -577,7 +552,6 @@ function buildHello() {
 
 const SECTIONS: SectionDef[] = [
   { name: 'hello', build: buildHello },                                        // HELLO [SOPA]
-  { name: 'beams', build: buildBeams },                                        // (no text)
   { name: 'drop', text: 'FROM\nAN IDEA', align: 'right', build: buildDrop },   // FROM AN IDEA
   { name: 'ball', text: 'GIVE IT\nSHAPE', align: 'left', build: buildBall },      // GIVE SHAPE
   { name: 'flow', text: 'CREATE\nTRENDS', build: buildFlow },                  // CREATE TRENDS
