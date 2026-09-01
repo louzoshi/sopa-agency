@@ -1,29 +1,10 @@
 // src/components/Team.tsx
 'use client';
 import { useRef, useState } from 'react';
-import { members, skillLabels, type Member } from '@/data/team';
+import { members, team, type Member } from '@/data/team';
 import MemberPanel from '@/components/MemberPanel';
-import ApplyModal from '@/components/ApplyModal';
 import SocialLinks from '@/components/SocialLinks';
-
-function Bars({ member, locale }: { member: Member; locale: string }) {
-  if (!member.skills?.length) return null;
-  return (
-    <div className="w-full space-y-1.5 font-mono text-[11px] leading-tight text-white/50">
-      {member.skills.map(([key, val]) => (
-        <div key={key}>
-          <div className="flex justify-between">
-            <span>{skillLabels[key]?.[locale as 'en' | 'pt'] ?? key}</span>
-            <span>{val}</span>
-          </div>
-          <div className="h-1 w-full bg-white/10">
-            <div className="h-full bg-amber-300" style={{ width: `${val}%` }} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+import Disciplines from '@/components/Disciplines';
 
 function Card({ member, locale, onOpen }: { member: Member; locale: string; onOpen: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -89,7 +70,14 @@ function Card({ member, locale, onOpen }: { member: Member; locale: string; onOp
             </span>
           </div>
           <SocialLinks member={member} />
-          <Bars member={member} locale={locale} />
+          {member.skills?.length ? (
+            <div className="mt-3">
+              <div className="mb-1 font-mono text-[10px] uppercase tracking-widest text-white/30">
+                {(team[locale as 'en' | 'pt'] ?? team.en).disciplines}
+              </div>
+              <Disciplines items={member.skills} locale={locale} />
+            </div>
+          ) : null}
         </div>
       </div>
       {member.bio && <p className="border-t border-white/10 pt-4 text-sm leading-relaxed text-white/50">{member.bio[locale as 'en' | 'pt'] ?? member.bio.en}</p>}
@@ -99,7 +87,6 @@ function Card({ member, locale, onOpen }: { member: Member; locale: string; onOp
 
 export default function Team({ title, subtitle, locale }: { title?: string; subtitle?: string; locale: string }) {
   const [selected, setSelected] = useState<Member | null>(null);
-  const [showApply, setShowApply] = useState(false);
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <div className="mb-12">
@@ -123,24 +110,6 @@ export default function Team({ title, subtitle, locale }: { title?: string; subt
       </div>
 
       <MemberPanel member={selected} locale={locale} onClose={() => setSelected(null)} />
-
-      {/* join-the-collective CTA */}
-      <div className="mt-12 text-center page-anim">
-        <div className="inline-block rounded-xl border border-white/20 bg-black/60 px-5 py-2 font-mono text-xs tracking-widest text-amber-200 backdrop-blur-sm">
-          [ {locale === 'pt' ? 'entrar no coletivo' : 'join the collective'} ]
-        </div>
-        <p className="mt-3 text-sm text-white/70">
-          {locale === 'pt' ? 'Faz parte da agência SOPA?' : 'Part of the SOPA agency?'}
-        </p>
-        <button
-          onClick={() => setShowApply(true)}
-          className="mt-2 inline-block font-mono text-sm text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
-        >
-          {locale === 'pt' ? 'candidatar perfil →' : 'apply with your profile →'}
-        </button>
-      </div>
-
-      {showApply && <ApplyModal locale={locale} onClose={() => setShowApply(false)} />}
     </section>
   );
 }

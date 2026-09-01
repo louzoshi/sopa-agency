@@ -56,7 +56,7 @@ ${w.detail ? `Details: ${w.detail.intro}` : ''}`).join('\n\n')}`;
     case 'people':
       md = `# SOPA AGENCY - THE CREW
 ${members.map((m) => `## ${m.handle}${m.ai ? ' [AI AGENT]' : ''}
-Skills: ${m.skills?.map((s) => s[0]).join(', ') || 'N/A'}
+Disciplines: ${m.skills?.join(', ') || 'N/A'}
 ${m.bio?.en ? `Bio: ${m.bio.en}` : ''}`).join('\n\n')}`;
       break;
 
