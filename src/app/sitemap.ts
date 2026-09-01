@@ -47,5 +47,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 1,
   });
 
+  // Plain-text / markdown mirror (see /llms.txt) — helps AI crawlers find the
+  // machine-readable representation. Lower priority; these are alternates, not pages.
+  const mdSlugs = ['llms.txt', 'index.md', 'work.md', 'team.md', 'solutions.md', 'feed.md', 'contact.md', 'agents.md'];
+  for (const s of mdSlugs) {
+    sitemapEntries.push({
+      url: `${baseUrl}/${s}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    });
+  }
+
   return sitemapEntries;
 }

@@ -27,6 +27,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const enPath = slug ? `/en/${slug.join('/')}` : '/en';
   const ptPath = slug ? `/pt/${slug.join('/')}` : '/pt';
 
+  // Machine-readable mirror for this route (see /llms.txt). home → index.md
+  const mdSection = !section || section === 'home' ? 'index' : SECTIONS.has(section) ? section : null;
+  const mdPath = mdSection ? `/${locale}/${mdSection}.md` : null;
+
   return {
     title,
     description: siteData.description,
@@ -36,6 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'en': enPath,
         'pt-BR': ptPath,
       },
+      ...(mdPath ? { types: { 'text/markdown': mdPath } } : {}),
     },
     openGraph: {
       title,
